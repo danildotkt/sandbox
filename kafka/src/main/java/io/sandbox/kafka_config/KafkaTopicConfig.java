@@ -9,8 +9,9 @@ import org.springframework.kafka.config.TopicBuilder;
 public class KafkaTopicConfig {
 
     @Bean
-    public NewTopic userInputTopic(){
-        return TopicBuilder.name("update-topic")
+    public NewTopic newTelegramUserTopic(){
+        return TopicBuilder.name("new_user_topic")
                 .build();
     }
+
 }

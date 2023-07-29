@@ -1,10 +1,5 @@
 package io.sandbox.command;
 
-import io.sandbox.model.UserRepository;
-import io.sandbox.service.TelegramBotService;
-import io.sandbox.user_state.UserState;
-import io.sandbox.utils.MessageUtils;
-import io.sandbox.utils.TinkoffGrpcUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;

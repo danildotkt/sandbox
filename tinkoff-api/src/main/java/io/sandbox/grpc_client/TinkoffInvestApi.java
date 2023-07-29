@@ -10,12 +10,15 @@ import java.util.List;
 @Component
 public class TinkoffInvestApi {
 
-    @Autowired
-    private TinkoffStub tinkoffStub;
+    private final TinkoffStub tinkoffStub;
 
-    private  String createNewSandbox() {
+    public TinkoffInvestApi(TinkoffStub tinkoffStub) {
+        this.tinkoffStub = tinkoffStub;
+    }
 
-        var SandboxStub = tinkoffStub.returnSandboxStub(token);
+    public String createNewSandbox(String token) {
+
+        var SandboxStub = tinkoffStub.returnSandboxStub();
 
         OpenSandboxAccountRequest request1 = OpenSandboxAccountRequest.newBuilder().build();
 
@@ -32,7 +35,7 @@ public class TinkoffInvestApi {
         MoneyValue value = MoneyValue
                 .newBuilder()
                 .setCurrency("RUB")
-                .setUnits(100_000_000)
+                .setUnits(10_000_000)
                 .build();
 
         SandboxPayInRequest request3 = SandboxPayInRequest
@@ -46,74 +49,74 @@ public class TinkoffInvestApi {
         return accountId;
     }
 
-    private MoneyValue postSandboxOrderMarket(String ticker, String quantity){
-
-        var SandboxStub = tinkoffStub.returnSandboxStub(token);
-        var InstrumentStub = tinkoffStub.returnInstrumentStub(token);
-
-
-        InstrumentRequest request3 = InstrumentRequest
-                .newBuilder()
-                .setIdType(InstrumentIdType.INSTRUMENT_ID_TYPE_TICKER)
-                .setId(ticker)
-                .setClassCode("TQBR")
-                .build();
-
-        ShareResponse response3 = InstrumentStub.shareBy(request3);
-
-        Share share = response3.getInstrument();
-        String figi = share.getFigi();
-
-        PostOrderRequest request4 = PostOrderRequest.newBuilder()
-                .setAccountId(accountId)
-                .setDirection(OrderDirection.ORDER_DIRECTION_BUY)
-                .setOrderType(OrderType.ORDER_TYPE_MARKET)
-                .setQuantity(Long.parseLong(quantity))
-                .setInstrumentId(figi)
-                .build();
-
-        PostOrderResponse response4 = SandboxStub.postSandboxOrder(request4);
-
-        return response4.getExecutedOrderPrice();
-    }
-
-    private List<PortfolioPosition> sandboxPortfolio(){
-
-        var sandboxStub = tinkoffStub.returnSandboxStub(token);
-
-        PortfolioRequest request = PortfolioRequest.newBuilder()
-                .setAccountId(accountId)
-                .build();
-
-        PortfolioResponse response = sandboxStub.getSandboxPortfolio(request);
-
-        return response.getPositionsList();
-    }
-
-    private List<ru.tinkoff.piapi.contract.v1.Operation> sandboxOperations(){
-
-        var OperationStub = tinkoffStub.returnOperationStub(token);
-
-        OperationsRequest request = OperationsRequest.newBuilder().setAccountId(accountId).build();
-
-        OperationsResponse response = OperationStub.getOperations(request);
-
-        var list = response.getOperationsList();
-        return list.subList(list.size()-10 , list.size());
-    }
-
-    public Instrument getInstrument(String figi){
-
-        var InstrumentStub = tinkoffStub.returnInstrumentStub(token);
-
-        InstrumentRequest request3 = InstrumentRequest
-                .newBuilder()
-                .setIdType(InstrumentIdType.INSTRUMENT_ID_TYPE_FIGI)
-                .setId(figi)
-                .build();
-
-        InstrumentResponse response3 = InstrumentStub.getInstrumentBy(request3);
-
-        return response3.getInstrument();
-    }
+//    private MoneyValue postSandboxOrderMarket(String ticker, String quantity){
+//
+//        var SandboxStub = tinkoffStub.returnSandboxStub(token);
+//        var InstrumentStub = tinkoffStub.returnInstrumentStub(token);
+//
+//
+//        InstrumentRequest request3 = InstrumentRequest
+//                .newBuilder()
+//                .setIdType(InstrumentIdType.INSTRUMENT_ID_TYPE_TICKER)
+//                .setId(ticker)
+//                .setClassCode("TQBR")
+//                .build();
+//
+//        ShareResponse response3 = InstrumentStub.shareBy(request3);
+//
+//        Share share = response3.getInstrument();
+//        String figi = share.getFigi();
+//
+//        PostOrderRequest request4 = PostOrderRequest.newBuilder()
+//                .setAccountId(accountId)
+//                .setDirection(OrderDirection.ORDER_DIRECTION_BUY)
+//                .setOrderType(OrderType.ORDER_TYPE_MARKET)
+//                .setQuantity(Long.parseLong(quantity))
+//                .setInstrumentId(figi)
+//                .build();
+//
+//        PostOrderResponse response4 = SandboxStub.postSandboxOrder(request4);
+//
+//        return response4.getExecutedOrderPrice();
+//    }
+//
+//    private List<PortfolioPosition> sandboxPortfolio(){
+//
+//        var sandboxStub = tinkoffStub.returnSandboxStub(token);
+//
+//        PortfolioRequest request = PortfolioRequest.newBuilder()
+//                .setAccountId(accountId)
+//                .build();
+//
+//        PortfolioResponse response = sandboxStub.getSandboxPortfolio(request);
+//
+//        return response.getPositionsList();
+//    }
+//
+//    private List<ru.tinkoff.piapi.contract.v1.Operation> sandboxOperations(){
+//
+//        var OperationStub = tinkoffStub.returnOperationStub(token);
+//
+//        OperationsRequest request = OperationsRequest.newBuilder().setAccountId(accountId).build();
+//
+//        OperationsResponse response = OperationStub.getOperations(request);
+//
+//        var list = response.getOperationsList();
+//        return list.subList(list.size()-10 , list.size());
+//    }
+//
+//    public Instrument getInstrument(String figi){
+//
+//        var InstrumentStub = tinkoffStub.returnInstrumentStub(token);
+//
+//        InstrumentRequest request3 = InstrumentRequest
+//                .newBuilder()
+//                .setIdType(InstrumentIdType.INSTRUMENT_ID_TYPE_FIGI)
+//                .setId(figi)
+//                .build();
+//
+//        InstrumentResponse response3 = InstrumentStub.getInstrumentBy(request3);
+//
+//        return response3.getInstrument();
+//    }
 }

@@ -1,13 +1,6 @@
 package io.sandbox.user_state;
 
-import lombok.Getter;
-import org.springframework.stereotype.Component;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
-@Component
-@Getter
 public enum UserState {
     STATE_START_REQUEST,
     STATE_START_RESPONSE,
@@ -20,18 +13,4 @@ public enum UserState {
     STATE_COMPANY_DATA_TYPE,
     STATE_COMPANY_DATA_RESPONSE,
     STATE_DEFAULT;
-
-    private final Map<Long, UserState> map = new ConcurrentHashMap<>();
-
-    public void setUserState(long chatId, UserState state) {
-        map.put(chatId, state);
-    }
-
-    public UserState getUserState(long chatId) {
-        return map.get(chatId);
-    }
-
-    public void removeUserState(long chatId) {
-        map.remove(chatId);
-    }
 }

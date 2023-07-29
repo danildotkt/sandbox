@@ -1,9 +1,7 @@
 package io.sandbox.user_state;
 
 
-import io.sandbox.command.CompanyData;
-import io.sandbox.command.Portfolio;
-import io.sandbox.command.PostOrder;
+
 import io.sandbox.command.Start;
 import io.sandbox.telegrambot.TelegramBot;
 import lombok.extern.log4j.Log4j;
@@ -13,6 +11,7 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Component
 public class UserStateManager {
@@ -39,9 +38,11 @@ public class UserStateManager {
 
         switch (userState){
 
-            case STATE_START_REQUEST ->  start.handleRequestState(hashMap,update);
+            case STATE_START_REQUEST -> start.stateStartRequest(update,hashMap);
 
-            case STATE_START_RESPONSE -> start.handleResponseState(hashMap, update);
+            case STATE_START_RESPONSE -> {
+                start.stateStartResponse(update, hashMap);
+            }
 
 //            case STATE_POST_ORDER_REQUEST -> postOrder.requestStateHandler(hashMap, update, telegramBotService);
 //
@@ -57,7 +58,7 @@ public class UserStateManager {
 //
 //            case STATE_COMPANY_DATA_RESPONSE -> companyData.responseStateHandler(hashMap, update, telegramBotService);
 //
-//            default -> waitForTextHandler(hashMap, update, telegramBotService);
+            default -> waitForTextHandler(hashMap, update);
         }
     }
 
@@ -69,7 +70,7 @@ public class UserStateManager {
 
             case "/start" -> {
                 hashMap.put(chatId, UserState.STATE_START_REQUEST);
-                userStateManager(hashMap, update, telegramBotService);
+                userStateManager(hashMap, update);
             }
 
 //            case "/portfolio" -> {

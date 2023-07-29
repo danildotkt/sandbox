@@ -18,49 +18,53 @@ public class TinkoffStub {
             .useTransportSecurity()
             .build();
 
-    private Metadata metadata(String token){
+    public SandboxServiceGrpc.SandboxServiceBlockingStub returnSandboxStub(){
 
-        Metadata metadata = new Metadata();
-        metadata.put(Metadata.Key.of("authorization", Metadata.ASCII_STRING_MARSHALLER),
-                "Bearer " + token);
-
-        return metadata;
-
-    }
-
-    public SandboxServiceGrpc.SandboxServiceBlockingStub returnSandboxStub(String token){
-
-        Metadata metadata = metadata(token);
+        Metadata metadata = metadata();
 
         return SandboxServiceGrpc
                 .newBlockingStub(channel)
                 .withInterceptors(MetadataUtils.newAttachHeadersInterceptor(metadata));
     }
 
-    public InstrumentsServiceGrpc.InstrumentsServiceBlockingStub returnInstrumentStub(String token){
+    public InstrumentsServiceGrpc.InstrumentsServiceBlockingStub returnInstrumentStub(){
 
-        Metadata metadata = metadata(token);
+        Metadata metadata = metadata();
 
         return InstrumentsServiceGrpc
                 .newBlockingStub(channel)
                 .withInterceptors(MetadataUtils.newAttachHeadersInterceptor(metadata));
     }
 
-    public OperationsServiceGrpc.OperationsServiceBlockingStub returnOperationStub(String token){
+    public OperationsServiceGrpc.OperationsServiceBlockingStub returnOperationStub(){
 
-        Metadata metadata = metadata(token);
+        Metadata metadata = metadata();
 
         return OperationsServiceGrpc
                 .newBlockingStub(channel)
                 .withInterceptors(MetadataUtils.newAttachHeadersInterceptor(metadata));
     }
 
-    public UsersServiceGrpc.UsersServiceBlockingStub returnUserStub(String token){
+    public UsersServiceGrpc.UsersServiceBlockingStub returnUserStub(){
 
-        Metadata metadata = metadata(token);
+        Metadata metadata = metadata();
 
         return UsersServiceGrpc
                 .newBlockingStub(channel)
                 .withInterceptors(MetadataUtils.newAttachHeadersInterceptor(metadata));
+    }
+
+    private Metadata metadata(){
+
+        Metadata metadata = new Metadata();
+        metadata.put(Metadata.Key.of("authorization", Metadata.ASCII_STRING_MARSHALLER),
+                "Bearer " + getToken());
+
+        return metadata;
+
+    }
+
+    private String getToken(){
+        return "token";
     }
 }

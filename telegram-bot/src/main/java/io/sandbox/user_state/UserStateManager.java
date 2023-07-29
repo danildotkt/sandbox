@@ -1,17 +1,12 @@
 package io.sandbox.user_state;
 
 
-
 import io.sandbox.command.Start;
-import io.sandbox.telegrambot.TelegramBot;
-import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
 import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 @Component
 public class UserStateManager {

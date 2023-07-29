@@ -4,48 +4,36 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ab15cdb5-eb67-4fe0-964c-29b172189793" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/database/src/main/java/io/sandbox/service/UserServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/src/main/proto/TelegramUserProto.proto" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/telegram-bot/src/main/java/io/sandbox/dto/TelegramUser.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/telegram-bot/src/main/java/io/sandbox/kafka/TelegramUserProducer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/website/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="ab15cdb5-eb67-4fe0-964c-29b172189793" name="Changes" comment="generated and implement grpc methods getSandboxId and getSandboxToken for remote using">
+      <change afterPath="$PROJECT_DIR$/database/src/main/java/io/sandbox/service/TelegramUserServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tinkoff-api/src/main/java/io/sandbox/grpc_client/TelegramUserServiceClient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tinkoff-api/src/main/java/io/sandbox/grpc_client/TelegramUserServiceStub.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tinkoff-api/src/main/proto/telegram_user_grpc.proto" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/database/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/src/main/java/io/sandbox/kafka/JpaConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/database/src/main/java/io/sandbox/kafka/TelegramUserConsumer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/src/main/java/io/sandbox/kafka/JpaProducer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/src/main/java/io/sandbox/entity/TelegramUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/database/src/main/java/io/sandbox/entity/TelegramUser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/src/main/java/io/sandbox/kafka/TelegramUserConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/database/src/main/java/io/sandbox/kafka/TelegramUserConsumer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/src/main/java/io/sandbox/service/UserServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/src/main/proto/TelegramUserProto.proto" beforeDir="false" afterPath="$PROJECT_DIR$/database/src/main/proto/telegram_user_grpc.proto" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/database/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kafka/src/main/java/io/sandbox/kafka_config/KafkaTopicConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/kafka/src/main/java/io/sandbox/kafka_config/KafkaTopicConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kafka/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/kafka/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/telegram-bot/src/main/java/io/sandbox/command/Command.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/telegram-bot/src/main/java/io/sandbox/command/Portfolio.java" beforeDir="false" afterPath="$PROJECT_DIR$/telegram-bot/src/main/java/io/sandbox/command/Portfolio.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/telegram-bot/src/main/java/io/sandbox/command/Start.java" beforeDir="false" afterPath="$PROJECT_DIR$/telegram-bot/src/main/java/io/sandbox/command/Start.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/telegram-bot/src/main/java/io/sandbox/kafka/TelegramBotConsumer.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/telegram-bot/src/main/java/io/sandbox/kafka/UpdateProducer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/telegram-bot/src/main/java/io/sandbox/kafka/TelegramUserProducer.java" beforeDir="false" afterPath="$PROJECT_DIR$/telegram-bot/src/main/java/io/sandbox/kafka/TelegramUserProducer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/telegram-bot/src/main/java/io/sandbox/telegrambot/TelegramBot.java" beforeDir="false" afterPath="$PROJECT_DIR$/telegram-bot/src/main/java/io/sandbox/telegrambot/TelegramBot.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/telegram-bot/src/main/java/io/sandbox/telegrambot/UpdateHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/telegram-bot/src/main/java/io/sandbox/telegrambot/UpdateHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/telegram-bot/src/main/java/io/sandbox/user_state/UserState.java" beforeDir="false" afterPath="$PROJECT_DIR$/telegram-bot/src/main/java/io/sandbox/user_state/UserState.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/telegram-bot/src/main/java/io/sandbox/user_state/UserStateManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/telegram-bot/src/main/java/io/sandbox/user_state/UserStateManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/telegram-bot/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/telegram-bot/src/main/resources/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tinkoff-api/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/tinkoff-api/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tinkoff-api/src/main/java/io/sandbox/CommandApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/tinkoff-api/src/main/java/io/sandbox/TinkoffApiApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tinkoff-api/src/main/java/io/sandbox/grpc_client/TinkoffInvestApi.java" beforeDir="false" afterPath="$PROJECT_DIR$/tinkoff-api/src/main/java/io/sandbox/grpc_client/TinkoffInvestApi.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tinkoff-api/src/main/java/io/sandbox/grpc_client/TinkoffStub.java" beforeDir="false" afterPath="$PROJECT_DIR$/tinkoff-api/src/main/java/io/sandbox/grpc_client/TinkoffStub.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tinkoff-api/src/main/java/io/sandbox/kafka/CommandProducer.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tinkoff-api/src/main/java/io/sandbox/kafka/UpdateConsumer.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tinkoff-api/src/main/proto/common.proto" beforeDir="false" afterPath="$PROJECT_DIR$/tinkoff-api/src/main/tinkoff-api-proto/common.proto" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tinkoff-api/src/main/proto/instruments.proto" beforeDir="false" afterPath="$PROJECT_DIR$/tinkoff-api/src/main/tinkoff-api-proto/instruments.proto" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tinkoff-api/src/main/proto/marketdata.proto" beforeDir="false" afterPath="$PROJECT_DIR$/tinkoff-api/src/main/tinkoff-api-proto/marketdata.proto" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tinkoff-api/src/main/proto/operations.proto" beforeDir="false" afterPath="$PROJECT_DIR$/tinkoff-api/src/main/tinkoff-api-proto/operations.proto" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tinkoff-api/src/main/proto/orders.proto" beforeDir="false" afterPath="$PROJECT_DIR$/tinkoff-api/src/main/tinkoff-api-proto/orders.proto" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tinkoff-api/src/main/proto/sandbox.proto" beforeDir="false" afterPath="$PROJECT_DIR$/tinkoff-api/src/main/tinkoff-api-proto/sandbox.proto" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tinkoff-api/src/main/proto/signals.proto" beforeDir="false" afterPath="$PROJECT_DIR$/tinkoff-api/src/main/tinkoff-api-proto/signals.proto" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tinkoff-api/src/main/proto/stoporders.proto" beforeDir="false" afterPath="$PROJECT_DIR$/tinkoff-api/src/main/tinkoff-api-proto/stoporders.proto" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tinkoff-api/src/main/proto/users.proto" beforeDir="false" afterPath="$PROJECT_DIR$/tinkoff-api/src/main/tinkoff-api-proto/users.proto" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tinkoff-api/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/tinkoff-api/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tinkoff-api/src/main/tinkoff-api-proto/common.proto" beforeDir="false" afterPath="$PROJECT_DIR$/tinkoff-api/src/main/proto/common.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tinkoff-api/src/main/tinkoff-api-proto/instruments.proto" beforeDir="false" afterPath="$PROJECT_DIR$/tinkoff-api/src/main/proto/instruments.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tinkoff-api/src/main/tinkoff-api-proto/marketdata.proto" beforeDir="false" afterPath="$PROJECT_DIR$/tinkoff-api/src/main/proto/marketdata.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tinkoff-api/src/main/tinkoff-api-proto/operations.proto" beforeDir="false" afterPath="$PROJECT_DIR$/tinkoff-api/src/main/proto/operations.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tinkoff-api/src/main/tinkoff-api-proto/orders.proto" beforeDir="false" afterPath="$PROJECT_DIR$/tinkoff-api/src/main/proto/orders.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tinkoff-api/src/main/tinkoff-api-proto/sandbox.proto" beforeDir="false" afterPath="$PROJECT_DIR$/tinkoff-api/src/main/proto/sandbox.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tinkoff-api/src/main/tinkoff-api-proto/signals.proto" beforeDir="false" afterPath="$PROJECT_DIR$/tinkoff-api/src/main/proto/signals.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tinkoff-api/src/main/tinkoff-api-proto/stoporders.proto" beforeDir="false" afterPath="$PROJECT_DIR$/tinkoff-api/src/main/proto/stoporders.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tinkoff-api/src/main/tinkoff-api-proto/users.proto" beforeDir="false" afterPath="$PROJECT_DIR$/tinkoff-api/src/main/proto/users.proto" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,7 +51,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="kafka_inject" />
+        <entry key="$PROJECT_DIR$" value="main" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -86,29 +74,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Notification.DisplayName-DoNotAsk-Settings Error&quot;: &quot;Could not save settings&quot;,
-    &quot;Notification.DoNotAsk-Settings Error&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;deletionFromPopupRequiresConfirmation&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;refactor__startcommand&quot;,
-    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;openjdk-20&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/danil-floppa/Рабочий стол/projects/sandbox-parent&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.updates&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "Notification.DisplayName-DoNotAsk-Settings Error": "Could not save settings",
+    "Notification.DoNotAsk-Settings Error": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "deletionFromPopupRequiresConfirmation": "false",
+    "git-widget-placeholder": "refactoring__monolit",
+    "jdk.selected.JAVA_MODULE": "openjdk-20",
+    "last_opened_file_path": "/home/danil-floppa/Рабочий стол/projects/sandbox-parent/tinkoff-api/src/main/proto",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.updates"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/tinkoff-api/src/main/proto" />
+      <recent name="$PROJECT_DIR$/database/src/main/proto" />
       <recent name="$PROJECT_DIR$/telegram-bot/src/main/java/io/sandbox/command" />
       <recent name="$PROJECT_DIR$/command/src/main/java/io/sandbox/kafka" />
       <recent name="$PROJECT_DIR$/command/src/main/resources" />
-      <recent name="$PROJECT_DIR$/update-handler/src/main/java/io/sandbox/user_state" />
-      <recent name="$PROJECT_DIR$/update-handler/src/main/java/io/sandbox/command" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/database/src/main" />
@@ -227,12 +216,45 @@
       <option name="project" value="LOCAL" />
       <updated>1690197950450</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="generated and implement grpc methods getSandboxId and getSandboxToken for remote using">
+      <option name="closed" value="true" />
+      <created>1690609078493</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1690609078493</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="main" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="sandbox 2 - refactoring monolithic architecture to microservice and kafka implementation" />
-    <option name="LAST_COMMIT_MESSAGE" value="sandbox 2 - refactoring monolithic architecture to microservice and kafka implementation" />
+    <MESSAGE value="generated and implement grpc methods getSandboxId and getSandboxToken for remote using" />
+    <option name="LAST_COMMIT_MESSAGE" value="generated and implement grpc methods getSandboxId and getSandboxToken for remote using" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

@@ -2,17 +2,17 @@ syntax = "proto3";
 
 package tinkoff.public.invest.api.contract.v1;
 
+import "common.proto";
+import "operations.proto";
+import "orders.proto";
+import "users.proto";
+
 option go_package = "./;investapi";
 option java_package = "ru.tinkoff.piapi.contract.v1";
 option java_multiple_files = true;
 option csharp_namespace = "Tinkoff.InvestApi.V1";
 option objc_class_prefix = "TIAPI";
 option php_namespace = "Tinkoff\\Invest\\V1";
-
-import "common.proto";
-import "orders.proto";
-import "operations.proto";
-import "users.proto";
 
 service SandboxService { //Сервис для работы с песочницей TINKOFF INVEST API
 

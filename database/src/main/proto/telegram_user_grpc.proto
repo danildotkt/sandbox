@@ -17,7 +17,7 @@ message GetSandboxIdResponse {
     string sandbox_id = 1;
 }
 
-service UserService {
+service TelegramUserService {
     rpc GetSandboxToken(GetSandboxTokenRequest) returns (GetSandboxTokenResponse);
     rpc GetSandboxId(GetSandboxIdRequest) returns (GetSandboxIdResponse);
 }

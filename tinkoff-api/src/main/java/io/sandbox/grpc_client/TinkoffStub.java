@@ -18,53 +18,52 @@ public class TinkoffStub {
             .useTransportSecurity()
             .build();
 
-    public SandboxServiceGrpc.SandboxServiceBlockingStub returnSandboxStub(){
+    public SandboxServiceGrpc.SandboxServiceBlockingStub returnSandboxStub(String token){
 
-        Metadata metadata = metadata();
+        Metadata metadata = metadata(token);
 
         return SandboxServiceGrpc
                 .newBlockingStub(channel)
                 .withInterceptors(MetadataUtils.newAttachHeadersInterceptor(metadata));
     }
 
-    public InstrumentsServiceGrpc.InstrumentsServiceBlockingStub returnInstrumentStub(){
+    public InstrumentsServiceGrpc.InstrumentsServiceBlockingStub returnInstrumentStub(String token){
 
-        Metadata metadata = metadata();
+        Metadata metadata = metadata(token);
 
         return InstrumentsServiceGrpc
                 .newBlockingStub(channel)
                 .withInterceptors(MetadataUtils.newAttachHeadersInterceptor(metadata));
     }
 
-    public OperationsServiceGrpc.OperationsServiceBlockingStub returnOperationStub(){
+    public OperationsServiceGrpc.OperationsServiceBlockingStub returnOperationStub(String token) {
 
-        Metadata metadata = metadata();
+        Metadata metadata = metadata(token);
 
         return OperationsServiceGrpc
                 .newBlockingStub(channel)
                 .withInterceptors(MetadataUtils.newAttachHeadersInterceptor(metadata));
     }
 
-    public UsersServiceGrpc.UsersServiceBlockingStub returnUserStub(){
+    public UsersServiceGrpc.UsersServiceBlockingStub returnUserStub(String token){
 
-        Metadata metadata = metadata();
+        Metadata metadata = metadata(token);
 
         return UsersServiceGrpc
                 .newBlockingStub(channel)
                 .withInterceptors(MetadataUtils.newAttachHeadersInterceptor(metadata));
     }
 
-    private Metadata metadata(){
+
+    private Metadata metadata(String token){
 
         Metadata metadata = new Metadata();
         metadata.put(Metadata.Key.of("authorization", Metadata.ASCII_STRING_MARSHALLER),
-                "Bearer " + getToken());
+                "Bearer " + token);
 
         return metadata;
 
     }
 
-    private String getToken(){
-        return "token";
-    }
+
 }

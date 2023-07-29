@@ -1,0 +1,23 @@
+syntax = "proto3";
+package io.sandbox.grpc;
+
+message GetSandboxTokenRequest {
+    int64 chat_id = 1;
+}
+
+message GetSandboxTokenResponse {
+    string sandbox_token = 1;
+}
+
+message GetSandboxIdRequest {
+    int64 chat_id = 1;
+}
+
+message GetSandboxIdResponse {
+    string sandbox_id = 1;
+}
+
+service TelegramUserService {
+    rpc GetSandboxToken(GetSandboxTokenRequest) returns (GetSandboxTokenResponse);
+    rpc GetSandboxId(GetSandboxIdRequest) returns (GetSandboxIdResponse);
+}

@@ -1,24 +1,16 @@
 package io.sandbox.entity;
 
-
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-
+@Builder
 @Setter
 @Getter
-@Builder
-@NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "telegram_user")
+@NoArgsConstructor
 public class TelegramUser {
-
-    @Id
     private long chatId;
 
     private String sandboxToken;
 
     private String sandboxId;
-
 }

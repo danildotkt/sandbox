@@ -1,24 +1,22 @@
 package io.sandbox.grpc_client;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.telegram.telegrambots.meta.api.objects.Update;
+import org.springframework.stereotype.Service;
 import ru.tinkoff.piapi.contract.v1.*;
 
 import java.util.List;
 
-@Component
-public class TinkoffInvestApi {
+@Service
+public class TinkoffInvestService {
 
     private final TinkoffStub tinkoffStub;
 
-    public TinkoffInvestApi(TinkoffStub tinkoffStub) {
+    public TinkoffInvestService(TinkoffStub tinkoffStub) {
         this.tinkoffStub = tinkoffStub;
     }
 
     public String createNewSandbox(String token) {
 
-        var SandboxStub = tinkoffStub.returnSandboxStub();
+        var SandboxStub = tinkoffStub.returnSandboxStub(token);
 
         OpenSandboxAccountRequest request1 = OpenSandboxAccountRequest.newBuilder().build();
 
@@ -35,7 +33,7 @@ public class TinkoffInvestApi {
         MoneyValue value = MoneyValue
                 .newBuilder()
                 .setCurrency("RUB")
-                .setUnits(10_000_000)
+                .setUnits(6_000_000)
                 .build();
 
         SandboxPayInRequest request3 = SandboxPayInRequest

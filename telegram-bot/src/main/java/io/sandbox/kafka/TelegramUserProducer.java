@@ -1,9 +1,11 @@
 package io.sandbox.kafka;
 
 
-import io.sandbox.dto.TelegramUser;
-import org.springframework.beans.factory.annotation.Autowired;
+import io.sandbox.entity.TelegramUser;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.kafka.support.KafkaHeaders;
+import org.springframework.messaging.Message;
+import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -11,13 +13,18 @@ public class TelegramUserProducer{
 
     private final KafkaTemplate<String, TelegramUser> kafkaTemplate;
 
-    @Autowired
     public TelegramUserProducer(KafkaTemplate<String, TelegramUser> kafkaTemplate) {
         this.kafkaTemplate = kafkaTemplate;
     }
 
-    public void sendTelegramUser(String topic, TelegramUser user) {
-        kafkaTemplate.send(topic, user);
+    public void sendTelegramUser(TelegramUser user) {
+
+        Message<TelegramUser> message = MessageBuilder
+                .withPayload(user)
+                .setHeader(KafkaHeaders.TOPIC, "topic")
+                .build();
+        
+        kafkaTemplate.send(message);
     }
 
 }

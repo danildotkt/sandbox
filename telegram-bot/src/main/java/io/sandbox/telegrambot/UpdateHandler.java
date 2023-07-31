@@ -2,7 +2,7 @@ package io.sandbox.telegrambot;
 
 
 import io.sandbox.user_state.UserState;
-import io.sandbox.user_state.UserStateManager;
+import io.sandbox.user_state.UserStateSwitcher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -12,21 +12,20 @@ import java.util.HashMap;
 @Service
 public class UpdateHandler {
 
-    private TelegramBot telegramBot;
+    private TelegramBotService telegramBotService;
 
     @Autowired
-    private UserStateManager userStateManager;
+    private UserStateSwitcher userStateSwitcher;
 
     private final HashMap<Long, UserState> map = new HashMap<>();
 
-    public void registerBot(TelegramBot telegramBotService) {
-        this.telegramBot = telegramBotService;
+    public void registerBot(TelegramBotService telegramBotService) {
+        this.telegramBotService = telegramBotService;
     }
 
     public void updateHandler(Update update) {
         map.putIfAbsent(update.getMessage().getChatId(), UserState.STATE_DEFAULT);
-        userStateManager.userStateManager(map, update);
-
+        userStateSwitcher.userStateSwitch(map, update, telegramBotService);
     }
 
 }

@@ -1,53 +1,51 @@
 package io.sandbox.grpc_client;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import ru.tinkoff.piapi.contract.v1.*;
 
 import java.util.List;
 
-//@Component
-//public class TinkoffInvestApi {
-//
-//    private final TinkoffStub tinkoffStub;
-//
-//    public TinkoffInvestApi(TinkoffStub tinkoffStub) {
-//        this.tinkoffStub = tinkoffStub;
-//    }
-//
-//    public String createNewSandbox(long chatId) {
-//
-//
-//
-//        var SandboxStub = tinkoffStub.returnSandboxStub();
-//
-//        OpenSandboxAccountRequest request1 = OpenSandboxAccountRequest.newBuilder().build();
-//
-//        OpenSandboxAccountResponse response1 = SandboxStub.openSandboxAccount(request1);
-//
-//        GetAccountsRequest request2 = GetAccountsRequest.newBuilder().build();
-//
-//        GetAccountsResponse response2 = SandboxStub.getSandboxAccounts(request2);
-//
-//        List<Account> list = response2.getAccountsList();
-//        Account account = list.get(0);
-//        String accountId = account.getId();
-//
-//        MoneyValue value = MoneyValue
-//                .newBuilder()
-//                .setCurrency("RUB")
-//                .setUnits(10_000_000)
-//                .build();
-//
-//        SandboxPayInRequest request3 = SandboxPayInRequest
-//                .newBuilder()
-//                .setAccountId(accountId)
-//                .setAmount(value)
-//                .build();
-//
-//        SandboxPayInResponse response3 = SandboxStub.sandboxPayIn(request3);
-//
-//        return accountId;
-//    }
+@Service
+public class TinkoffInvestService {
+
+    private final TinkoffStub tinkoffStub;
+
+    public TinkoffInvestService(TinkoffStub tinkoffStub) {
+        this.tinkoffStub = tinkoffStub;
+    }
+
+    public String createNewSandbox(String token) {
+
+        var SandboxStub = tinkoffStub.returnSandboxStub(token);
+
+        OpenSandboxAccountRequest request1 = OpenSandboxAccountRequest.newBuilder().build();
+
+        OpenSandboxAccountResponse response1 = SandboxStub.openSandboxAccount(request1);
+
+        GetAccountsRequest request2 = GetAccountsRequest.newBuilder().build();
+
+        GetAccountsResponse response2 = SandboxStub.getSandboxAccounts(request2);
+
+        List<Account> list = response2.getAccountsList();
+        Account account = list.get(0);
+        String accountId = account.getId();
+
+        MoneyValue value = MoneyValue
+                .newBuilder()
+                .setCurrency("RUB")
+                .setUnits(6_000_000)
+                .build();
+
+        SandboxPayInRequest request3 = SandboxPayInRequest
+                .newBuilder()
+                .setAccountId(accountId)
+                .setAmount(value)
+                .build();
+
+        SandboxPayInResponse response3 = SandboxStub.sandboxPayIn(request3);
+
+        return accountId;
+    }
 
 //    private MoneyValue postSandboxOrderMarket(String ticker, String quantity){
 //
@@ -119,4 +117,4 @@ import java.util.List;
 //
 //        return response3.getInstrument();
 //    }
-//}
+}

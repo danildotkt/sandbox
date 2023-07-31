@@ -1,8 +1,7 @@
 package io.sandbox.kafka;
 
 
-import io.sandbox.dto.TelegramUser;
-import org.springframework.beans.factory.annotation.Autowired;
+import io.sandbox.entity.TelegramUser;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.messaging.Message;
@@ -22,7 +21,7 @@ public class TelegramUserProducer{
 
         Message<TelegramUser> message = MessageBuilder
                 .withPayload(user)
-                .setHeader(KafkaHeaders.TOPIC, "new_user_topic")
+                .setHeader(KafkaHeaders.TOPIC, "topic")
                 .build();
         
         kafkaTemplate.send(message);

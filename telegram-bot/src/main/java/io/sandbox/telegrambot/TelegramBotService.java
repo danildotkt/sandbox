@@ -11,7 +11,7 @@ import javax.annotation.PostConstruct;
 
 
 @Service
-public class TelegramBot extends TelegramLongPollingBot {
+public class TelegramBotService extends TelegramLongPollingBot {
 
     @Value("${bot.name}")
     private String botName;
@@ -21,7 +21,7 @@ public class TelegramBot extends TelegramLongPollingBot {
 
     private final UpdateHandler updateHandler;
 
-    public TelegramBot(UpdateHandler updateHandlerService) {
+    public TelegramBotService(UpdateHandler updateHandlerService) {
         this.updateHandler = updateHandlerService;
     }
 
@@ -45,7 +45,8 @@ public class TelegramBot extends TelegramLongPollingBot {
         updateHandler.updateHandler(update);
     }
 
-    public void sendMessage(long chatId, String text) {
+    public void sendMessage(Update update, String text) {
+        var chatId = update.getMessage().getChatId();
         var message = new SendMessage();
         message.setChatId(chatId);
         message.setText(text);

@@ -4,6 +4,7 @@ import io.sandbox.entity.TelegramUser;
 import io.sandbox.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.messaging.Message;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,10 +17,31 @@ public class TelegramUserConsumer {
         this.userRepository = userRepository;
     }
 
-    @KafkaListener(topics = "new_user_topic",
+    @KafkaListener(topics = "topic",
                     groupId = "new_user_group")
     public void saveToDataBase(TelegramUser telegramUser){
-        userRepository.save(telegramUser);
-    }
 
+        userRepository.save(telegramUser);
+        System.out.println(telegramUser + "   saved");
+
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

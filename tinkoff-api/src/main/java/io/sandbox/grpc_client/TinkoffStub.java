@@ -4,13 +4,13 @@ import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.Metadata;
 import io.grpc.stub.MetadataUtils;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import ru.tinkoff.piapi.contract.v1.InstrumentsServiceGrpc;
 import ru.tinkoff.piapi.contract.v1.OperationsServiceGrpc;
 import ru.tinkoff.piapi.contract.v1.SandboxServiceGrpc;
 import ru.tinkoff.piapi.contract.v1.UsersServiceGrpc;
 
-@Component
+@Service
 public class TinkoffStub {
 
     private final ManagedChannel channel = ManagedChannelBuilder

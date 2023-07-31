@@ -5,35 +5,42 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ab15cdb5-eb67-4fe0-964c-29b172189793" name="Changes" comment="generated and implement grpc methods getSandboxId and getSandboxToken for remote using">
-      <change afterPath="$PROJECT_DIR$/database/src/main/java/io/sandbox/service/TelegramUserServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tinkoff-api/src/main/java/io/sandbox/grpc_client/TelegramUserServiceClient.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tinkoff-api/src/main/java/io/sandbox/grpc_client/TelegramUserServiceStub.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tinkoff-api/src/main/proto/telegram_user_grpc.proto" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/src/main/java/io/sandbox/service/UserRepositoryService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/telegram-bot/src/main/java/io/sandbox/entity/TelegramUser.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/telegram-bot/src/main/java/io/sandbox/enums/TokenStatus.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/telegram-bot/src/main/java/io/sandbox/grpc_client/CommandServiceClient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/telegram-bot/src/main/java/io/sandbox/utils/MessageUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/telegram-bot/src/main/proto/CommandService.proto" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tinkoff-api/src/main/java/io/sandbox/service/CommandServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tinkoff-api/src/main/proto/CommandService.proto" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/website/src/main/java/io/sandbox/WebApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/database/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/src/main/java/io/sandbox/JpaApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/database/src/main/java/io/sandbox/JpaApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database/src/main/java/io/sandbox/entity/TelegramUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/database/src/main/java/io/sandbox/entity/TelegramUser.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database/src/main/java/io/sandbox/kafka/TelegramUserConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/database/src/main/java/io/sandbox/kafka/TelegramUserConsumer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/src/main/java/io/sandbox/service/UserServiceImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/src/main/proto/TelegramUserProto.proto" beforeDir="false" afterPath="$PROJECT_DIR$/database/src/main/proto/telegram_user_grpc.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/src/main/java/io/sandbox/service/TelegramUserServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/src/main/proto/telegram_user_grpc.proto" beforeDir="false" afterPath="$PROJECT_DIR$/database/src/main/proto/UserRepositoryService.proto" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/database/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/telegram-bot/src/main/java/io/sandbox/command/Portfolio.java" beforeDir="false" afterPath="$PROJECT_DIR$/telegram-bot/src/main/java/io/sandbox/command/Portfolio.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kafka/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/kafka/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kafka/src/main/java/io/sandbox/kafka_config/KafkaTopicConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/kafka/src/main/java/io/sandbox/kafka_config/KafkaTopicConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/telegram-bot/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/telegram-bot/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/telegram-bot/src/main/java/io/sandbox/command/Start.java" beforeDir="false" afterPath="$PROJECT_DIR$/telegram-bot/src/main/java/io/sandbox/command/Start.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/telegram-bot/src/main/java/io/sandbox/dto/TelegramUser.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/telegram-bot/src/main/java/io/sandbox/kafka/TelegramUserProducer.java" beforeDir="false" afterPath="$PROJECT_DIR$/telegram-bot/src/main/java/io/sandbox/kafka/TelegramUserProducer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/telegram-bot/src/main/java/io/sandbox/telegrambot/TelegramBot.java" beforeDir="false" afterPath="$PROJECT_DIR$/telegram-bot/src/main/java/io/sandbox/telegrambot/TelegramBot.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/telegram-bot/src/main/java/io/sandbox/telegrambot/TelegramBot.java" beforeDir="false" afterPath="$PROJECT_DIR$/telegram-bot/src/main/java/io/sandbox/telegrambot/TelegramBotService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/telegram-bot/src/main/java/io/sandbox/telegrambot/UpdateHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/telegram-bot/src/main/java/io/sandbox/telegrambot/UpdateHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/telegram-bot/src/main/java/io/sandbox/user_state/UserStateManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/telegram-bot/src/main/java/io/sandbox/user_state/UserStateManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/telegram-bot/src/main/java/io/sandbox/user_state/UserStateManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/telegram-bot/src/main/java/io/sandbox/user_state/UserStateSwitcher.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tinkoff-api/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/tinkoff-api/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tinkoff-api/src/main/java/io/sandbox/grpc_client/TinkoffInvestApi.java" beforeDir="false" afterPath="$PROJECT_DIR$/tinkoff-api/src/main/java/io/sandbox/grpc_client/TinkoffInvestApi.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tinkoff-api/src/main/java/io/sandbox/TinkoffApiApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/tinkoff-api/src/main/java/io/sandbox/TinkoffApiApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tinkoff-api/src/main/java/io/sandbox/grpc_client/TelegramUserServiceClient.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tinkoff-api/src/main/java/io/sandbox/grpc_client/TelegramUserServiceStub.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tinkoff-api/src/main/java/io/sandbox/grpc_client/TinkoffInvestApi.java" beforeDir="false" afterPath="$PROJECT_DIR$/tinkoff-api/src/main/java/io/sandbox/grpc_client/TinkoffInvestService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tinkoff-api/src/main/java/io/sandbox/grpc_client/TinkoffStub.java" beforeDir="false" afterPath="$PROJECT_DIR$/tinkoff-api/src/main/java/io/sandbox/grpc_client/TinkoffStub.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tinkoff-api/src/main/tinkoff-api-proto/common.proto" beforeDir="false" afterPath="$PROJECT_DIR$/tinkoff-api/src/main/proto/common.proto" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tinkoff-api/src/main/tinkoff-api-proto/instruments.proto" beforeDir="false" afterPath="$PROJECT_DIR$/tinkoff-api/src/main/proto/instruments.proto" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tinkoff-api/src/main/tinkoff-api-proto/marketdata.proto" beforeDir="false" afterPath="$PROJECT_DIR$/tinkoff-api/src/main/proto/marketdata.proto" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tinkoff-api/src/main/tinkoff-api-proto/operations.proto" beforeDir="false" afterPath="$PROJECT_DIR$/tinkoff-api/src/main/proto/operations.proto" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tinkoff-api/src/main/tinkoff-api-proto/orders.proto" beforeDir="false" afterPath="$PROJECT_DIR$/tinkoff-api/src/main/proto/orders.proto" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tinkoff-api/src/main/tinkoff-api-proto/sandbox.proto" beforeDir="false" afterPath="$PROJECT_DIR$/tinkoff-api/src/main/proto/sandbox.proto" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tinkoff-api/src/main/tinkoff-api-proto/signals.proto" beforeDir="false" afterPath="$PROJECT_DIR$/tinkoff-api/src/main/proto/signals.proto" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tinkoff-api/src/main/tinkoff-api-proto/stoporders.proto" beforeDir="false" afterPath="$PROJECT_DIR$/tinkoff-api/src/main/proto/stoporders.proto" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tinkoff-api/src/main/tinkoff-api-proto/users.proto" beforeDir="false" afterPath="$PROJECT_DIR$/tinkoff-api/src/main/proto/users.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tinkoff-api/src/main/proto/telegram_user_grpc.proto" beforeDir="false" afterPath="$PROJECT_DIR$/tinkoff-api/src/main/proto/UserRepositoryService.proto" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,6 +51,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Interface" />
+        <option value="Enum" />
         <option value="Class" />
       </list>
     </option>
@@ -74,30 +82,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "Notification.DisplayName-DoNotAsk-Settings Error": "Could not save settings",
-    "Notification.DoNotAsk-Settings Error": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "deletionFromPopupRequiresConfirmation": "false",
-    "git-widget-placeholder": "refactoring__monolit",
-    "jdk.selected.JAVA_MODULE": "openjdk-20",
-    "last_opened_file_path": "/home/danil-floppa/Рабочий стол/projects/sandbox-parent/tinkoff-api/src/main/proto",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.updates"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;Notification.DisplayName-DoNotAsk-Settings Error&quot;: &quot;Could not save settings&quot;,
+    &quot;Notification.DoNotAsk-Settings Error&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;deletionFromPopupRequiresConfirmation&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;refactoring__monolit&quot;,
+    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;openjdk-20&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/danil-floppa/Рабочий стол/projects/sandbox-parent/tinkoff-api/src/main/proto&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.updates&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/tinkoff-api/src/main/proto" />
+      <recent name="$PROJECT_DIR$/telegram-bot/src/main/proto" />
       <recent name="$PROJECT_DIR$/database/src/main/proto" />
       <recent name="$PROJECT_DIR$/telegram-bot/src/main/java/io/sandbox/command" />
       <recent name="$PROJECT_DIR$/command/src/main/java/io/sandbox/kafka" />
-      <recent name="$PROJECT_DIR$/command/src/main/resources" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/database/src/main" />
@@ -119,20 +127,7 @@
       <command value="mvn clean install" />
     </option>
   </component>
-  <component name="RunManager" selected="Application.CommandApplication">
-    <configuration name="CommandApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="io.sandbox.CommandApplication" />
-      <module name="command" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="io.sandbox.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="Application.UserRepositoryApplication">
     <configuration name="KafkaApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="io.sandbox.KafkaApplication" />
       <module name="kafka" />
@@ -159,18 +154,28 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="CommandApplicationTests.contextLoads" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="command" />
+    <configuration name="TinkoffApiApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="io.sandbox.TinkoffApiApplication" />
+      <module name="tinkoff-api" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="io.sandbox.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="io.sandbox" />
-      <option name="MAIN_CLASS_NAME" value="io.sandbox.CommandApplicationTests" />
-      <option name="METHOD_NAME" value="contextLoads" />
-      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="UserRepositoryApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="io.sandbox.UserRepositoryApplication" />
+      <module name="database" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="io.sandbox.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -191,11 +196,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.CommandApplicationTests.contextLoads" />
+        <item itemvalue="Application.UserRepositoryApplication" />
+        <item itemvalue="Application.KafkaApplication" />
         <item itemvalue="Docker.docker-compose.yml: Compose Deployment" />
         <item itemvalue="Application.TelegramBotApplication" />
-        <item itemvalue="Application.KafkaApplication" />
-        <item itemvalue="Application.CommandApplication" />
+        <item itemvalue="Application.TinkoffApiApplication" />
       </list>
     </recent_temporary>
   </component>
@@ -224,7 +229,15 @@
       <option name="project" value="LOCAL" />
       <updated>1690609078493</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="generated and implement grpc methods getSandboxId and getSandboxToken for remote using">
+      <option name="closed" value="true" />
+      <created>1690649278372</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1690649278372</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

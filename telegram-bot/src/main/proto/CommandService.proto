@@ -1,0 +1,14 @@
+syntax = "proto3";
+package io.sandbox.grpc;
+
+message CreateNewSandboxRequest {
+    string token = 1;
+}
+
+message CreateNewSandboxResponse {
+    string sandbox_id = 1;
+}
+
+service CommandService{
+    rpc CreateNewSandbox(CreateNewSandboxRequest) returns (CreateNewSandboxResponse);
+}

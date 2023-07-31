@@ -95,9 +95,9 @@ public class Start {
     private void saveTelegramUser(TelegramUser user){
         telegramUserProducer.sendTelegramUser(user);
     }
-    private boolean checkUserExistInDB(long chatId){
-
-    }
+//    private boolean checkUserExistInDB(long chatId){
+//
+//    }
 
 }
 

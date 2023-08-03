@@ -1,11 +1,10 @@
 package io.sandbox.command;
 
-//@Component
-//public class Portfolio {
-//
-//    @Autowired
-//    private UserRepository userRepository;
-//
+import org.springframework.stereotype.Component;
+
+@Component
+public class Portfolio {
+
 //    public void responseStateHandler(HashMap<Long, UserState> hashMap, Update update, TelegramBotService telegramBotService){
 //        var message = update.getMessage();
 //        hashMap.remove(message.getChatId());
@@ -60,4 +59,4 @@ package io.sandbox.command;
 //
 //        return response.getPositionsList();
 //    }
-//}
+}

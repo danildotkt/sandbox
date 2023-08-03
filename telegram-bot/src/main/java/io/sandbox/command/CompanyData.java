@@ -1,23 +1,11 @@
 package io.sandbox.command;
 
-//import io.sandbox.model.UserRepository;
-//import io.sandbox.service.TelegramBotService;
-//import io.sandbox.user_state.UserState;
-//import io.sandbox.utils.KeyboardUtils;
-//import io.sandbox.utils.MessageUtils;
-//import io.sandbox.utils.TinkoffGrpcUtils;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.stereotype.Component;
-//import org.telegram.telegrambots.meta.api.objects.Update;
-//import ru.tinkoff.piapi.contract.v1.InstrumentIdType;
-//import ru.tinkoff.piapi.contract.v1.InstrumentRequest;
-//import ru.tinkoff.piapi.contract.v1.ShareResponse;
-//
-//import java.util.HashMap;
-//
-//@Component
-//public class CompanyData {
-//
+
+import org.springframework.stereotype.Component;
+
+@Component
+public class CompanyData {
+
 //    @Autowired
 //    private UserRepository userRepository;
 //
@@ -66,4 +54,4 @@ package io.sandbox.command;
 //
 //        return "https://smart-lab.ru/q/"+inputMessage.toUpperCase()+"/f/y/";
 //    }
-//}
+}

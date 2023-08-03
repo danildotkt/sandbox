@@ -10,7 +10,7 @@ public class KafkaTopicConfig {
 
     @Bean
     public NewTopic newTelegramUserTopic(){
-        return TopicBuilder.name("topic")
+        return TopicBuilder.name("telegram_user_topic")
                 .build();
     }
 

@@ -21,7 +21,7 @@ public class TelegramUserProducer{
 
         Message<TelegramUser> message = MessageBuilder
                 .withPayload(user)
-                .setHeader(KafkaHeaders.TOPIC, "topic")
+                .setHeader(KafkaHeaders.TOPIC, "telegram_user_topic")
                 .build();
         
         kafkaTemplate.send(message);

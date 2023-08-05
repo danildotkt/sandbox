@@ -43,7 +43,7 @@ public class CommandClient {
         return response.getExecutedOrderPrice();
     }
 
-    public static String getInstrument(long chatId, String ticker){
+    public static String getInstrumentName(long chatId, String ticker){
 
         var request = CommandServiceOuterClass.GetInstrumentRequest
                 .newBuilder()
@@ -55,6 +55,8 @@ public class CommandClient {
 
         return response.getShareName();
     }
+
+
 
 
 }

@@ -17,7 +17,17 @@ message GetSandboxIdResponse {
     string sandbox_id = 1;
 }
 
-service TelegramUserService {
+message CheckTelegramUserInDatabaseRequest {
+    int64 chat_id = 1;
+}
+
+message CheckTelegramUserInDatabaseResponse {
+    bool exist = 1;
+}
+
+
+service UserRepositoryService {
     rpc GetSandboxToken(GetSandboxTokenRequest) returns (GetSandboxTokenResponse);
     rpc GetSandboxId(GetSandboxIdRequest) returns (GetSandboxIdResponse);
+    rpc ExistByIdTelegramUser(CheckTelegramUserInDatabaseRequest) returns (CheckTelegramUserInDatabaseResponse);
 }

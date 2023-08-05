@@ -11,21 +11,14 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-//import io.grpc.stub.StreamObserver;
-//import io.sandbox.entity.TelegramUser;
-//import io.sandbox.grpc.TelegramUserGrpc;
-//import io.sandbox.grpc.TelegramUserServiceGrpc;
-//import io.sandbox.repository.UserRepository;
-//import org.springframework.stereotype.Service;
-//
-//import java.util.Optional;
-//
 @Service
-public class UserRepositoryService extends UserRepositoryServiceGrpc.UserRepositoryServiceImplBase {
+public class UserRepositoryServiceImpl extends UserRepositoryServiceGrpc.UserRepositoryServiceImplBase {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
+    public UserRepositoryServiceImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @Override
     public void getSandboxToken(UserRepositoryServiceOuterClass.GetSandboxTokenRequest request,
@@ -60,6 +53,25 @@ public class UserRepositoryService extends UserRepositoryServiceGrpc.UserReposit
                 .GetSandboxIdResponse
                 .newBuilder()
                 .setSandboxId(telegramUser.getSandboxId())
+                .build();
+
+
+        responseObserver.onNext(response);
+        responseObserver.onCompleted();
+    }
+
+    @Override
+    public void existByIdTelegramUser(UserRepositoryServiceOuterClass.CheckTelegramUserInDatabaseRequest request,
+                             StreamObserver<UserRepositoryServiceOuterClass.CheckTelegramUserInDatabaseResponse> responseObserver) {
+
+        Long chatId = request.getChatId();
+        boolean isTelegramUserExist = userRepository.existsById(chatId);
+
+
+        UserRepositoryServiceOuterClass.CheckTelegramUserInDatabaseResponse response = UserRepositoryServiceOuterClass
+                .CheckTelegramUserInDatabaseResponse
+                .newBuilder()
+                .setExist(isTelegramUserExist)
                 .build();
 
 

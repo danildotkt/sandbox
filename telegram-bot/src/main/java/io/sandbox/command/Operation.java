@@ -1,19 +1,11 @@
 package io.sandbox.command;
 
 
-//import io.sandbox.user_state.UserState;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.stereotype.Component;
-//import org.telegram.telegrambots.meta.api.objects.Update;
-//
-//import javax.sound.midi.Instrument;
-//import java.util.HashMap;
-//import java.util.List;
-//import java.util.Optional;
-//
-//@Component
-//public class Operation {
-//
+import org.springframework.stereotype.Component;
+
+@Component
+public class Operation {
+
 //    @Autowired
 //    private UserRepository userRepository;
 //
@@ -60,5 +52,5 @@ package io.sandbox.command;
 //        var list = response.getOperationsList();
 //        return list.subList(list.size()-10 , list.size());
 //    }
-//
-//}
+
+}

@@ -1,8 +1,8 @@
 package io.sandbox;
 
-import io.grpc.Server;
 import io.grpc.ServerBuilder;
-import io.sandbox.grpc_client.TinkoffInvestService;
+import io.sandbox.grpc_client.TelegramUserRepositoryClient;
+import io.sandbox.grpc_client.TinkoffInvestClient;
 import io.sandbox.grpc_client.TinkoffStub;
 import io.sandbox.service.CommandServiceImpl;
 import org.springframework.boot.SpringApplication;
@@ -15,9 +15,8 @@ public class TinkoffApiApplication {
     public static void main(String[] args) throws IOException, InterruptedException {
         SpringApplication.run(TinkoffApiApplication.class, args);
 
-
-        var server = ServerBuilder.forPort(9090)
-                .addService(new CommandServiceImpl(new TinkoffInvestService(new TinkoffStub())))
+        var server = ServerBuilder.forPort(9093)
+                .addService(new CommandServiceImpl(new TinkoffInvestClient(new TinkoffStub(), new TelegramUserRepositoryClient())))
                 .build();
 
         server.start();

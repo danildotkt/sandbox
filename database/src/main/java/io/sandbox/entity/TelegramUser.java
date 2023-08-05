@@ -19,6 +19,6 @@ public class TelegramUser {
 
     private String sandboxToken;
 
-    private String sandboxId;
+    private String accountId;
 
 }

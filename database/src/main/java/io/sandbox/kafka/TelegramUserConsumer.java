@@ -1,29 +1,25 @@
 package io.sandbox.kafka;
 
 import io.sandbox.entity.TelegramUser;
-import io.sandbox.repository.UserRepository;
+import io.sandbox.repository.TelegramUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
-import org.springframework.messaging.Message;
 import org.springframework.stereotype.Service;
 
 @Service
 public class TelegramUserConsumer {
 
-    private final UserRepository userRepository;
+    private final TelegramUserRepository telegramUserRepository;
 
     @Autowired
-    public TelegramUserConsumer(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public TelegramUserConsumer(TelegramUserRepository telegramUserRepository) {
+        this.telegramUserRepository = telegramUserRepository;
     }
 
-    @KafkaListener(topics = "topic",
+    @KafkaListener(topics = "telegram_user_topic",
                     groupId = "new_user_group")
-    public void saveToDataBase(TelegramUser telegramUser){
-
-        userRepository.save(telegramUser);
-        System.out.println(telegramUser + "   saved");
-
+    public void saveToDatabase(TelegramUser telegramUser){
+        telegramUserRepository.save(telegramUser);
     }
 }
 

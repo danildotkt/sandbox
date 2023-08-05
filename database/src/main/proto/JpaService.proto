@@ -1,0 +1,35 @@
+syntax = "proto3";
+package io.sandbox.grpc;
+
+service JpaService {
+
+  rpc GetSandboxToken(GetSandboxTokenRequest) returns (GetSandboxTokenResponse);
+
+  rpc GetAccountId(GetAccountIdRequest) returns (GetAccountIdResponse);
+
+  rpc ExistById(ExistByIdRequest) returns (ExistByIdResponse);
+}
+
+message GetSandboxTokenRequest {
+  int64 chat_id = 1;
+}
+
+message GetSandboxTokenResponse {
+  string sandbox_token = 1;
+}
+
+message GetAccountIdRequest {
+  int64 chat_id = 1;
+}
+
+message GetAccountIdResponse {
+  string account_id = 1;
+}
+
+message ExistByIdRequest {
+  int64 chat_id = 1;
+}
+
+message ExistByIdResponse {
+  bool exist = 1;
+}

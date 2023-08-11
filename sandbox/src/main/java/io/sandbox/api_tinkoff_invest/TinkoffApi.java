@@ -11,9 +11,9 @@ public class TinkoffApi {
 
         var SandboxStub = TinkoffStub.returnSandboxStub(token);
 
-        OpenSandboxAccountRequest request1 = OpenSandboxAccountRequest.newBuilder().build();
+        OpenSandboxAccountRequest request = OpenSandboxAccountRequest.newBuilder().build();
 
-        OpenSandboxAccountResponse response1 = SandboxStub.openSandboxAccount(request1);
+        OpenSandboxAccountResponse response = SandboxStub.openSandboxAccount(request);
 
         GetAccountsRequest request2 = GetAccountsRequest.newBuilder().build();
 

@@ -2,7 +2,6 @@ package io.sandbox.command_response;
 
 import io.grpc.Status;
 import io.grpc.StatusRuntimeException;
-import io.sandbox.api_database.JpaServiceClient;
 import io.sandbox.api_tinkoff_invest.TinkoffApi;
 import io.sandbox.telegram_bot.TelegramBotService;
 import io.sandbox.user_state.UserState;

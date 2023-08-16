@@ -15,7 +15,6 @@ public class TinkoffStub {
             .useTransportSecurity()
             .build();
 
-
     public static SandboxServiceGrpc.SandboxServiceBlockingStub returnSandboxStub(String token) {
         Metadata metadata = metadata(token);
         return SandboxServiceGrpc.newBlockingStub(channel)
@@ -33,8 +32,6 @@ public class TinkoffStub {
         return OperationsServiceGrpc.newBlockingStub(channel)
                 .withInterceptors(MetadataUtils.newAttachHeadersInterceptor(metadata));
     }
-
-
 
     private static Metadata metadata(String token) {
         Metadata metadata = new Metadata();

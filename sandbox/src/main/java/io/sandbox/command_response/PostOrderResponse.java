@@ -3,20 +3,23 @@ package io.sandbox.command_response;
 import io.grpc.Status;
 import io.grpc.StatusRuntimeException;
 import io.sandbox.api_tinkoff_invest.TinkoffApi;
-import io.sandbox.telegram_bot.TelegramBotService;
+import io.sandbox.telegram_bot.TelegramBot;
 import io.sandbox.user_state.UserState;
+import io.sandbox.utils.TinkoffDataTypeParser;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
-import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
+
 
 public class PostOrderResponse {
 
-    public static void sendMessage(Update update, HashMap<Long, UserState> hashMap, TelegramBotService telegramBotService) {
-        telegramBotService.sendMessage(update, switchStateResponse(update, hashMap));
+    public static void sendMessage(Update update, ConcurrentHashMap<Long, UserState> hashMap, TelegramBot telegramBot) {
+        telegramBot.sendMessage(update, switchStateResponse(update, hashMap));
     }
 
-    private static String switchStateResponse(Update update,HashMap<Long, UserState> hashMap){
+    private static String switchStateResponse(Update update,ConcurrentHashMap<Long, UserState> hashMap){
         var chatId = update.getMessage().getChatId();
+
         try {
             var response =  outputResponse(update);
             hashMap.remove(chatId);
@@ -25,7 +28,6 @@ public class PostOrderResponse {
             hashMap.put(chatId, UserState.STATE_POST_ORDER_RESPONSE);
             return "попробуйте снова";
         }
-
     }
 
     private static String outputResponse(Update update){
@@ -44,10 +46,12 @@ public class PostOrderResponse {
             throw new StatusRuntimeException(Status.INVALID_ARGUMENT);
         }
 
-        var executedOrderPrice = TinkoffApi.postOrderBuyMarket(chatId, ticker.toUpperCase(), String.valueOf(quantity));
+        var order = TinkoffApi.postOrderBuyMarket(chatId, ticker.toUpperCase(), String.valueOf(quantity));
+        var executedOrderPrice = TinkoffDataTypeParser.MoneyValueToDouble(order.getExecutedOrderPrice());
+        var instrument = TinkoffApi.getInstrumentByTicker(chatId, ticker);
 
         return "Вы купили " + quantity + " акции " +
-                TinkoffApi.getInstrumentByTicker(chatId, ticker).getName()
-                + " по цене " + executedOrderPrice + " ₽";
+                instrument.getName()
+                + " по цене " + executedOrderPrice/quantity + " ₽";
     }
 }

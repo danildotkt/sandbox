@@ -46,18 +46,8 @@ public class TinkoffApi {
         var accountId = JpaServiceClient.getAccountId(chatId);
 
         var sandboxStub = TinkoffStub.returnSandboxStub(sandboxToken);
-        var instrumentStub = TinkoffStub.returnInstrumentStub(sandboxToken);
 
-        InstrumentRequest request3 = InstrumentRequest
-                .newBuilder()
-                .setIdType(InstrumentIdType.INSTRUMENT_ID_TYPE_TICKER)
-                .setId(ticker)
-                .setClassCode("TQBR")
-                .build();
-
-        ShareResponse response3 = instrumentStub.shareBy(request3);
-
-        Share share = response3.getInstrument();
+        Share share = getInstrumentByTicker(chatId, ticker);
         String figi = share.getFigi();
 
         PostOrderRequest request4 = PostOrderRequest.newBuilder()
@@ -89,18 +79,24 @@ public class TinkoffApi {
 
     public static List<Operation> sandboxOperations(long chatId){
 
-    var sandboxToken = JpaServiceClient.getSandboxToken(chatId);
-    var accountId = JpaServiceClient.getAccountId(chatId);
-
-    var OperationStub = TinkoffStub.returnOperationStub(sandboxToken);
-
-    OperationsRequest request = OperationsRequest.newBuilder().setAccountId(accountId).build();
-
-    OperationsResponse response = OperationStub.getOperations(request);
-
-    var list = response.getOperationsList();
-    return list.subList(list.size()-10 , list.size());
-}
+        var sandboxToken = JpaServiceClient.getSandboxToken(chatId);
+        var accountId = JpaServiceClient.getAccountId(chatId);
+    
+        var OperationStub = TinkoffStub.returnOperationStub(sandboxToken);
+    
+        OperationsRequest request = OperationsRequest.newBuilder().setAccountId(accountId).build();
+    
+        OperationsResponse response = OperationStub.getOperations(request);
+    
+        var list = response.getOperationsList();
+        return getLastTenOperations(list);
+    }
+    private static List<Operation> getLastTenOperations(List<Operation> operationList){
+        if(operationList.size() <= 10){
+            return operationList;
+        }
+        return operationList.subList(operationList.size()-10 , operationList.size());
+    }
 
     public static Share getInstrumentByTicker(long chatId,String ticker){
 

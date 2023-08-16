@@ -10,13 +10,12 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 public class TelegramUserConsumerTest {
+
     @Mock
     private TelegramUserRepository telegramUserRepository;
+
     @InjectMocks
     private TelegramUserConsumer telegramUserConsumer;
-
-    public TelegramUserConsumerTest() {
-    }
 
     @BeforeEach
     public void setup() {
@@ -24,9 +23,9 @@ public class TelegramUserConsumerTest {
     }
 
     @Test
-    public void saveToDatabase_ShouldSaveTelegramUserToRepository() {
+    public void testSetToDatabase() {
         TelegramUser telegramUser = TelegramUser.builder().sandboxToken("token").chatId(124L).accountId("id").build();
         this.telegramUserConsumer.saveToDatabase(telegramUser);
-        ((TelegramUserRepository) Mockito.verify(this.telegramUserRepository, Mockito.times(1))).save(telegramUser);
+        Mockito.verify(this.telegramUserRepository, Mockito.times(1)).save(telegramUser);
     }
 }

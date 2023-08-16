@@ -11,7 +11,7 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import javax.annotation.PostConstruct;
 
 @Service
-public class TelegramBotService extends TelegramLongPollingBot {
+public class TelegramBot extends TelegramLongPollingBot {
 
     @Value("${bot.name}")
     private String botName;
@@ -19,15 +19,15 @@ public class TelegramBotService extends TelegramLongPollingBot {
     @Value("${bot.token}")
     private String botToken;
 
-    private final UpdateHandler updateHandler;
+    private final TelegramUpdateHandler telegramUpdateHandler;
 
-    public TelegramBotService(UpdateHandler updateHandlerService) {
-        this.updateHandler = updateHandlerService;
+    public TelegramBot(TelegramUpdateHandler telegramUpdateHandlerService) {
+        this.telegramUpdateHandler = telegramUpdateHandlerService;
     }
 
     @PostConstruct
     public void init(){
-        updateHandler.registerBot(this);
+        telegramUpdateHandler.registerBot(this);
     }
 
     @Override
@@ -42,7 +42,7 @@ public class TelegramBotService extends TelegramLongPollingBot {
 
     @Override
     public void onUpdateReceived(Update update) {
-        updateHandler.updateHandler(update);
+        telegramUpdateHandler.updateHandle(update);
     }
 
     public void sendMessage(Update update, String text) {
@@ -53,7 +53,7 @@ public class TelegramBotService extends TelegramLongPollingBot {
         try {
             execute(message);
         } catch (TelegramApiException e) {
-            System.out.println("a");// TODO LOGG
+            e.printStackTrace();
         }
     }
 

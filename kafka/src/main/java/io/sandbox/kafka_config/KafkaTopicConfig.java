@@ -13,5 +13,4 @@ public class KafkaTopicConfig {
         return TopicBuilder.name("telegram_user_topic")
                 .build();
     }
-
 }

@@ -26,12 +26,10 @@ public class JpaServiceImpl extends JpaServiceGrpc.JpaServiceImplBase {
         Long chatId = request.getChatId();
         Optional<TelegramUser> user = telegramUserRepository.findById(chatId);
 
-        TelegramUser telegramUser = user.get();
-
         JpaServiceOuterClass.GetSandboxTokenResponse response = JpaServiceOuterClass
                 .GetSandboxTokenResponse
                 .newBuilder()
-                .setSandboxToken(telegramUser.getSandboxToken())
+                .setSandboxToken(user.get().getSandboxToken())
                 .build();
 
 
@@ -46,12 +44,10 @@ public class JpaServiceImpl extends JpaServiceGrpc.JpaServiceImplBase {
         Long chatId = request.getChatId();
         Optional<TelegramUser> user = telegramUserRepository.findById(chatId);
 
-        TelegramUser telegramUser = user.get();
-
         JpaServiceOuterClass.GetAccountIdResponse response = JpaServiceOuterClass
                 .GetAccountIdResponse
                 .newBuilder()
-                .setAccountId(telegramUser.getAccountId())
+                .setAccountId(user.get().getAccountId())
                 .build();
 
 

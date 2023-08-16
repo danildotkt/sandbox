@@ -1,18 +1,18 @@
 package io.sandbox.utils;
 
-import io.sandbox.telegram_bot.TelegramBotService;
+import io.sandbox.telegram_bot.TelegramBot;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
 
 public class MessageUtils {
-    public static void defaultMessage(Update update, TelegramBotService telegramBotService){
+    public static void defaultMessage(Update update, TelegramBot telegramBot){
         var text =  "Для взаимодействия со мной вы можете " +
                 "использовать следущие команды :\n" +
                 "/portfolio - просмотр портфеля \n" +
-                "/post_order - выставления заявки \n" +
+                "/post_order - покупка акций \n" +
                 "/operations - список операций \n" +
-                "/company_data - информация компании";
+                "/company_data - финансовые отчеты компании";
 
-        telegramBotService.sendMessage(update , text);
+        telegramBot.sendMessage(update , text);
     }
 }

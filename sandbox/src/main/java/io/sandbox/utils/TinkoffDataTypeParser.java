@@ -41,12 +41,4 @@ public class TinkoffDataTypeParser {
             }
         }
     }
-    public static String operationStateParser(String state){
-        return switch (state) {
-            case "OPERATION_STATE_EXECUTED" -> "Выполнена";
-            case "OPERATION_STATE_CANCELED" -> "Отменена";
-            case "OPERATION_STATE_PROGRESS" -> "Исполняется";
-            default -> "Статус операции не определён";
-        };
-    }
 }

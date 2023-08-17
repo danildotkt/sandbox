@@ -1,18 +1,27 @@
 package io.sandbox.command_response;
 
-import io.sandbox.api_tinkoff_invest.TinkoffApi;
+import io.sandbox.api_tinkoff_invest.TinkoffInvestApiClient;
 import io.sandbox.telegram_bot.TelegramBot;
 import io.sandbox.user_state.UserState;
 import io.sandbox.utils.TinkoffDataTypeParser;
+import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import ru.tinkoff.piapi.contract.v1.Instrument;
 import ru.tinkoff.piapi.contract.v1.Operation;
 
 import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.Map;
 
-public class OperationsResponse {
-    public static void sendMessage(Update update, ConcurrentHashMap<Long, UserState> hashMap, TelegramBot telegramBot) {
+
+public class OperationsResponse implements ResponseStrategy {
+
+    private final TinkoffInvestApiClient tinkoffInvestApiClient;
+
+    public OperationsResponse(TinkoffInvestApiClient tinkoffInvestApiClient) {
+        this.tinkoffInvestApiClient = tinkoffInvestApiClient;
+    }
+
+    public void sendResponse(Update update, Map<Long, UserState> hashMap, TelegramBot telegramBot) {
 
         var operationList = switchStateResponse(update, hashMap);
         var chatId = update.getMessage().getChatId();
@@ -24,7 +33,7 @@ public class OperationsResponse {
 
             var figi = operation.getFigi();
 
-            Instrument instrument = TinkoffApi.getInstrumentByFigi(chatId, figi);
+            Instrument instrument = tinkoffInvestApiClient.getInstrumentByFigi(chatId, figi);
 
             String info = instrument.getName()
                     + "\nСтатус заявки : "
@@ -42,13 +51,13 @@ public class OperationsResponse {
         }
     }
 
-    private static List<Operation> switchStateResponse(Update update, ConcurrentHashMap<Long, UserState> hashMap){
+    private List<Operation> switchStateResponse(Update update, Map<Long, UserState> hashMap){
         var chatId = update.getMessage().getChatId();
         hashMap.remove(chatId);
         return getOperationsList(update);
     }
 
-    private static List<Operation> getOperationsList(Update update){
-        return TinkoffApi.sandboxOperations(update.getMessage().getChatId());
+    private List<Operation> getOperationsList(Update update){
+        return tinkoffInvestApiClient.sandboxOperations(update.getMessage().getChatId());
     }
 }

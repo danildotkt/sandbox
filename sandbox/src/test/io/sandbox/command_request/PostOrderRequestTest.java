@@ -6,43 +6,42 @@ import io.sandbox.user_state.UserState;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
-class PostOrderRequestTest {
-
-    @Mock
-    Update update;
-
-    @Mock
-    ConcurrentHashMap<Long, UserState> stateMap;
-
-    @Mock
-    TelegramBot telegramBot;
-
-    @BeforeEach
-    public void setup(){
-        MockitoAnnotations.initMocks(this);
-    }
-
+public class PostOrderRequestTest {
 
     @Test
-    public void testSendMessage() {
-        Message message = mock(Message.class);
-        when(update.getMessage()).thenReturn(message);
-        when(message.getChatId()).thenReturn(123456789L);
+    public void testSendRequest() {
+        // Создаем mock-объекты для зависимостей
+        Update update = Mockito.mock(Update.class);
+        Message message = Mockito.mock(Message.class);
+        Map<Long, UserState> hashMap = new HashMap<>();
+        TelegramBot telegramBot = Mockito.mock(TelegramBot.class);
 
-        StartResponse.sendMessage(update, stateMap, telegramBot);
+        Mockito.when(update.getMessage()).thenReturn(message);
+        Mockito.when(message.getChatId()).thenReturn(123456L);
 
-        verify(telegramBot, times(1)).sendMessage(eq(update), anyString());
+        // Создаем экземпляр класса PostOrderRequest
+        PostOrderRequest request = new PostOrderRequest();
+
+        // Вызываем метод sendRequest
+        request.sendRequest(update, hashMap, telegramBot);
+
+        // Проверяем, что методы были вызваны с правильными аргументами
+        Mockito.verify(telegramBot).sendMessage(Mockito.eq(update), Mockito.anyString());
+        Mockito.verify(update.getMessage()).getChatId();
+        Mockito.verify(hashMap).remove(Mockito.anyLong());
+        Mockito.verify(hashMap).put(Mockito.anyLong(), Mockito.eq(UserState.STATE_POST_ORDER_RESPONSE));
     }
-
 }

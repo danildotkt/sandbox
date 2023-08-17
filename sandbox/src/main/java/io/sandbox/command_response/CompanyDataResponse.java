@@ -1,19 +1,27 @@
 package io.sandbox.command_response;
 
-import io.sandbox.api_tinkoff_invest.TinkoffApi;
+import io.sandbox.api_tinkoff_invest.TinkoffInvestApiClient;
 import io.sandbox.telegram_bot.TelegramBot;
 import io.sandbox.user_state.UserState;
+import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.Map;
 
-public class CompanyDataResponse {
 
-    public static void sendMessage(Update update, ConcurrentHashMap<Long, UserState> hashMap, TelegramBot telegramBot) {
+public class CompanyDataResponse implements ResponseStrategy {
+
+    private final TinkoffInvestApiClient tinkoffInvestApiClient;
+
+    public CompanyDataResponse(TinkoffInvestApiClient tinkoffInvestApiClient) {
+        this.tinkoffInvestApiClient = tinkoffInvestApiClient;
+    }
+
+    public void sendResponse(Update update, Map<Long, UserState> hashMap, TelegramBot telegramBot) {
         telegramBot.sendMessage(update, switchStateResponse(update, hashMap));
     }
 
-    private static String switchStateResponse(Update update, ConcurrentHashMap<Long, UserState> hashMap){
+    private String switchStateResponse(Update update, Map<Long, UserState> hashMap){
 
         var response = response(update);
         if(response.matches("^https.+")){
@@ -22,13 +30,13 @@ public class CompanyDataResponse {
         return response;
     }
 
-    private static String response(Update update){
+    private String response(Update update){
 
         var ticker = update.getMessage().getText();
         var chatId = update.getMessage().getChatId();
 
         try {
-            TinkoffApi.getInstrumentByTicker(chatId, ticker);
+            tinkoffInvestApiClient.getInstrumentByTicker(chatId, ticker);
         }
         catch(Exception e){
             return "Компании c тикером \""+ticker+"\" не существует, попробуйте снова \nНапример : gazp";

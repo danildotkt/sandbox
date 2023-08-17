@@ -9,7 +9,6 @@ import org.mockito.MockitoAnnotations;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
-import java.util.HashMap;
 import java.util.concurrent.ConcurrentHashMap;
 
 import static org.mockito.ArgumentMatchers.anyString;
@@ -39,7 +38,7 @@ class PortfolioResponseTest {
         when(update.getMessage()).thenReturn(message);
         when(message.getChatId()).thenReturn(123456789L);
 
-        StartResponse.sendMessage(update, stateMap, telegramBot);
+        StartResponse.sendResponse(update, stateMap, telegramBot);
 
         verify(telegramBot, times(1)).sendMessage(eq(update), anyString());
     }

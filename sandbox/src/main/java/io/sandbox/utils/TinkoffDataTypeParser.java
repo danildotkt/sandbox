@@ -8,28 +8,15 @@ import java.text.DecimalFormat;
 public class TinkoffDataTypeParser {
 
     public static double MoneyValueToDouble(MoneyValue moneyValue) {
-        return Double.parseDouble(moneyValue.getUnits() + "." + moneyValue.getNano());
+        var notRoundValue =  Double.parseDouble(moneyValue.getUnits() + "." + moneyValue.getNano());
+        return Double.parseDouble(DecimalUtils.roundForDoubleValue(notRoundValue));
     }
 
     public static double QuotationToDouble(Quotation quotation) {
-        return Double.parseDouble(quotation.getUnits() + "." + quotation.getNano());
+        var notRoundValue =  Double.parseDouble(quotation.getUnits() + "." + quotation.getNano());
+        return Double.parseDouble(DecimalUtils.roundForDoubleValue(notRoundValue));
     }
-    public static String roundForDoubleValue(double value) {
-        DecimalFormat df = new DecimalFormat("0.00");
-        String roundedNumber = df.format(value);
 
-        if (value % 1 == 0) {
-            return String.format("%.0f", value);
-        } else {
-            if (roundedNumber.endsWith("00")) {
-                return roundedNumber.substring(0, roundedNumber.indexOf('.'));
-            } else if (roundedNumber.endsWith("0")) {
-                return roundedNumber.substring(0, roundedNumber.length() - 1);
-            } else {
-                return roundedNumber;
-            }
-        }
-    }
     public static String operationStateParser(String state){
         return switch (state) {
             case "OPERATION_STATE_EXECUTED" -> "Выполнена";

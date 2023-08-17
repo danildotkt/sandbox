@@ -9,16 +9,16 @@ import org.springframework.stereotype.Service;
 @Service
 public class JpaServiceClient {
 
-    private static final ManagedChannel channel = ManagedChannelBuilder
+    private final ManagedChannel channel = ManagedChannelBuilder
             .forAddress("localhost", 9091)
             .usePlaintext()
             .build();
 
-    private static final JpaServiceGrpc.JpaServiceBlockingStub stub =
+    private final JpaServiceGrpc.JpaServiceBlockingStub stub =
             JpaServiceGrpc.newBlockingStub(channel);
 
 
-    public static boolean isExist(long chatId) {
+    public boolean isExist(long chatId) {
 
         var request = JpaServiceOuterClass.ExistByIdRequest
                 .newBuilder()
@@ -29,7 +29,7 @@ public class JpaServiceClient {
 
     }
 
-    public static String getSandboxToken(long chatId) {
+    public String getSandboxToken(long chatId) {
 
         var request = JpaServiceOuterClass.GetSandboxTokenRequest
                         .newBuilder()
@@ -41,7 +41,7 @@ public class JpaServiceClient {
         return response.getSandboxToken();
     }
 
-    public static String getAccountId(long chatId) {
+    public String getAccountId(long chatId) {
         var request = JpaServiceOuterClass.GetAccountIdRequest
                 .newBuilder()
                 .setChatId(chatId)

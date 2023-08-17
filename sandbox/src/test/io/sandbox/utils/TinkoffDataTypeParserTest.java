@@ -32,32 +32,6 @@ public class TinkoffDataTypeParserTest {
         assertEquals(20.75, result);
     }
 
-    @Test
-    public void testRoundForDoubleValue_Integer() {
-        double value = 10.0;
-
-        String result = TinkoffDataTypeParser.roundForDoubleValue(value);
-
-        assertEquals("10", result);
-    }
-
-    @Test
-    public void testRoundForDoubleValue_TwoDecimalPlaces() {
-        double value = 10.50;
-
-        String result = TinkoffDataTypeParser.roundForDoubleValue(value);
-
-        assertEquals("10.5", result);
-    }
-
-    @Test
-    public void testRoundForDoubleValue_MoreThanTwoDecimalPlaces() {
-        double value = 10.1234;
-
-        String result = TinkoffDataTypeParser.roundForDoubleValue(value);
-
-        assertEquals("10.12", result);
-    }
 
     @Test
     public void testOperationStateParser_Executed() {

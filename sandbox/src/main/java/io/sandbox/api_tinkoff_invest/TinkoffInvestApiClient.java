@@ -1,15 +1,25 @@
 package io.sandbox.api_tinkoff_invest;
 
 import io.sandbox.api_database.JpaServiceClient;
+import org.springframework.stereotype.Service;
 import ru.tinkoff.piapi.contract.v1.*;
 
 import java.util.List;
 
-public class TinkoffApi {
+@Service
+public class TinkoffInvestApiClient {
+    
+    private final JpaServiceClient jpaServiceClient;
+    private final TinkoffInvestStub stub;
 
-    public static String createNewSandbox(String token) {
+    public TinkoffInvestApiClient(TinkoffInvestStub stub, JpaServiceClient jpaServiceClient) {
+        this.jpaServiceClient = jpaServiceClient;
+        this.stub = stub;
+    }
 
-        var SandboxStub = TinkoffStub.returnSandboxStub(token);
+    public String createNewSandbox(String token) {
+
+        var SandboxStub = stub.returnSandboxStub(token);
 
         OpenSandboxAccountRequest request = OpenSandboxAccountRequest.newBuilder().build();
 
@@ -40,12 +50,12 @@ public class TinkoffApi {
         return accountId;
     }
 
-    public static PostOrderResponse postOrderBuyMarket(long chatId, String ticker, String quantity){
+    public PostOrderResponse postOrderBuyMarket(long chatId, String ticker, String quantity){
 
-        var sandboxToken = JpaServiceClient.getSandboxToken(chatId);
-        var accountId = JpaServiceClient.getAccountId(chatId);
+        var sandboxToken = jpaServiceClient.getSandboxToken(chatId);
+        var accountId = jpaServiceClient.getAccountId(chatId);
 
-        var sandboxStub = TinkoffStub.returnSandboxStub(sandboxToken);
+        var sandboxStub = stub.returnSandboxStub(sandboxToken);
 
         Share share = getInstrumentByTicker(chatId, ticker);
         String figi = share.getFigi();
@@ -61,12 +71,12 @@ public class TinkoffApi {
         return sandboxStub.postSandboxOrder(request4);
     }
 
-    public static List<PortfolioPosition> sandboxPortfolio(long chatId){
+    public List<PortfolioPosition> sandboxPortfolio(long chatId){
 
-        var sandboxToken = JpaServiceClient.getSandboxToken(chatId);
-        var accountId = JpaServiceClient.getAccountId(chatId);
+        var sandboxToken = jpaServiceClient.getSandboxToken(chatId);
+        var accountId = jpaServiceClient.getAccountId(chatId);
 
-        var sandboxStub = TinkoffStub.returnSandboxStub(sandboxToken);
+        var sandboxStub = stub.returnSandboxStub(sandboxToken);
 
         PortfolioRequest request = PortfolioRequest.newBuilder()
                 .setAccountId(accountId)
@@ -77,12 +87,12 @@ public class TinkoffApi {
         return response.getPositionsList();
     }
 
-    public static List<Operation> sandboxOperations(long chatId){
+    public List<Operation> sandboxOperations(long chatId){
 
-        var sandboxToken = JpaServiceClient.getSandboxToken(chatId);
-        var accountId = JpaServiceClient.getAccountId(chatId);
+        var sandboxToken = jpaServiceClient.getSandboxToken(chatId);
+        var accountId = jpaServiceClient.getAccountId(chatId);
     
-        var OperationStub = TinkoffStub.returnOperationStub(sandboxToken);
+        var OperationStub = stub.returnOperationStub(sandboxToken);
     
         OperationsRequest request = OperationsRequest.newBuilder().setAccountId(accountId).build();
     
@@ -91,18 +101,19 @@ public class TinkoffApi {
         var list = response.getOperationsList();
         return getLastTenOperations(list);
     }
-    private static List<Operation> getLastTenOperations(List<Operation> operationList){
+    
+    private List<Operation> getLastTenOperations(List<Operation> operationList){
         if(operationList.size() <= 10){
             return operationList;
         }
         return operationList.subList(operationList.size()-10 , operationList.size());
     }
 
-    public static Share getInstrumentByTicker(long chatId,String ticker){
+    public Share getInstrumentByTicker(long chatId,String ticker){
 
-        var sandboxToken = JpaServiceClient.getSandboxToken(chatId);
+        var sandboxToken = jpaServiceClient.getSandboxToken(chatId);
 
-        var InstrumentStub = TinkoffStub.returnInstrumentStub(sandboxToken);
+        var InstrumentStub = stub.returnInstrumentStub(sandboxToken);
 
         InstrumentRequest request3 = InstrumentRequest
                 .newBuilder()
@@ -116,11 +127,11 @@ public class TinkoffApi {
         return response3.getInstrument();
     }
 
-    public static Instrument getInstrumentByFigi(long chatId, String figi) {
+    public Instrument getInstrumentByFigi(long chatId, String figi) {
 
-        var sandboxToken = JpaServiceClient.getSandboxToken(chatId);
+        var sandboxToken = jpaServiceClient.getSandboxToken(chatId);
 
-        var InstrumentStub = TinkoffStub.returnInstrumentStub(sandboxToken);
+        var InstrumentStub = stub.returnInstrumentStub(sandboxToken);
 
         InstrumentRequest request3 = InstrumentRequest
                 .newBuilder()

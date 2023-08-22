@@ -1,11 +1,10 @@
 package io.sandbox.command_response;
 
-import io.sandbox.api_tinkoff_invest.TinkoffInvestApiClient;
+import io.sandbox.api_tinkoff_invest.InvestApi;
 import io.sandbox.telegram_bot.TelegramBot;
 import io.sandbox.user_state.UserState;
 import io.sandbox.utils.DecimalUtils;
 import io.sandbox.utils.TinkoffDataTypeParser;
-import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import ru.tinkoff.piapi.contract.v1.PortfolioPosition;
 
@@ -15,10 +14,10 @@ import java.util.Map;
 
 public class PortfolioResponse implements ResponseStrategy {
 
-    private final TinkoffInvestApiClient tinkoffInvestApiClient;
+    private final InvestApi investApi;
 
-    public PortfolioResponse(TinkoffInvestApiClient tinkoffInvestApiClient) {
-        this.tinkoffInvestApiClient = tinkoffInvestApiClient;
+    public PortfolioResponse(InvestApi investApi) {
+        this.investApi = investApi;
     }
 
     public void sendResponse(Update update, Map<Long, UserState> hashMap, TelegramBot telegramBot) {
@@ -31,7 +30,7 @@ public class PortfolioResponse implements ResponseStrategy {
         for (var position : positionsList) {
             var figi = position.getFigi();
 
-            var instrument = tinkoffInvestApiClient.getInstrumentByFigi(chatId,  figi);
+            var instrument = investApi.getInstrumentByFigi(chatId,  figi);
 
             if(instrument.getName().equals("Российский рубль")){
                 continue;
@@ -88,7 +87,7 @@ public class PortfolioResponse implements ResponseStrategy {
     }
 
     private List<PortfolioPosition> getPortfolioPositionList(Update update){
-        return tinkoffInvestApiClient.sandboxPortfolio(update.getMessage().getChatId());
+        return investApi.sandboxPortfolio(update.getMessage().getChatId());
     }
 
 }

@@ -1,8 +1,11 @@
 package io.sandbox.user_state;
 
-import io.sandbox.api_database.JpaServiceClient;
-import io.sandbox.api_tinkoff_invest.TinkoffInvestApiClient;
-import io.sandbox.command_request.*;
+import io.sandbox.api_database.JpaService;
+import io.sandbox.api_tinkoff_invest.InvestApi;
+import io.sandbox.command_request.CompanyDataRequest;
+import io.sandbox.command_request.PostOrderRequest;
+import io.sandbox.command_request.RequestStrategy;
+import io.sandbox.command_request.StartRequest;
 import io.sandbox.command_response.*;
 import io.sandbox.telegram_bot.TelegramBot;
 import io.sandbox.utils.MessageUtils;
@@ -15,14 +18,13 @@ import java.util.Map;
 @Component
 public class UserStateSwitcher {
 
-    private final TinkoffInvestApiClient tinkoffInvestApiClient;
-    private final JpaServiceClient jpaServiceClient;
+    private final InvestApi investApi;
+    private final JpaService jpaService;
 
-    public UserStateSwitcher(TinkoffInvestApiClient tinkoffInvestApiClient, JpaServiceClient jpaServiceClient) {
-        this.tinkoffInvestApiClient = tinkoffInvestApiClient;
-        this.jpaServiceClient = jpaServiceClient;
+    public UserStateSwitcher(InvestApi investApi, JpaService jpaService) {
+        this.investApi = investApi;
+        this.jpaService = jpaService;
     }
-
 
     public void userStateSwitch(Map<Long, UserState> userMap, Update update, TelegramBot telegramBot) {
 
@@ -34,18 +36,18 @@ public class UserStateSwitcher {
 
         switch (userState) {
 
-            case STATE_START_REQUEST -> requestStrategy = new StartRequest(jpaServiceClient);
-            case STATE_START_RESPONSE -> responseStrategy = new StartResponse(tinkoffInvestApiClient);
+            case STATE_START_REQUEST -> requestStrategy = new StartRequest(jpaService);
+            case STATE_START_RESPONSE -> responseStrategy = new StartResponse(investApi);
 
             case STATE_POST_ORDER_REQUEST -> requestStrategy = new PostOrderRequest();
-            case STATE_POST_ORDER_RESPONSE -> responseStrategy = new PostOrderResponse(tinkoffInvestApiClient);
+            case STATE_POST_ORDER_RESPONSE -> responseStrategy = new PostOrderResponse(investApi);
 
             case STATE_COMPANY_DATA_REQUEST -> requestStrategy = new CompanyDataRequest();
-            case STATE_COMPANY_DATA_RESPONSE -> responseStrategy = new CompanyDataResponse(tinkoffInvestApiClient);
+            case STATE_COMPANY_DATA_RESPONSE -> responseStrategy = new CompanyDataResponse(investApi);
 
-            case STATE_PORTFOLIO -> responseStrategy = new PortfolioResponse(tinkoffInvestApiClient);
+            case STATE_PORTFOLIO -> responseStrategy = new PortfolioResponse(investApi);
 
-            case STATE_OPERATIONS -> responseStrategy = new OperationsResponse(tinkoffInvestApiClient);
+            case STATE_OPERATIONS -> responseStrategy = new OperationsResponse(investApi);
 
             default -> waitForTextHandler(userMap, update, telegramBot);
         }

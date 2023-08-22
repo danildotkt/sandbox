@@ -1,10 +1,9 @@
 package io.sandbox.command_response;
 
-import io.sandbox.api_tinkoff_invest.TinkoffInvestApiClient;
+import io.sandbox.api_tinkoff_invest.InvestApi;
 import io.sandbox.telegram_bot.TelegramBot;
 import io.sandbox.user_state.UserState;
 import io.sandbox.utils.TinkoffDataTypeParser;
-import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import ru.tinkoff.piapi.contract.v1.Instrument;
 import ru.tinkoff.piapi.contract.v1.Operation;
@@ -12,13 +11,12 @@ import ru.tinkoff.piapi.contract.v1.Operation;
 import java.util.List;
 import java.util.Map;
 
-
 public class OperationsResponse implements ResponseStrategy {
 
-    private final TinkoffInvestApiClient tinkoffInvestApiClient;
+    private final InvestApi investApi;
 
-    public OperationsResponse(TinkoffInvestApiClient tinkoffInvestApiClient) {
-        this.tinkoffInvestApiClient = tinkoffInvestApiClient;
+    public OperationsResponse(InvestApi investApi) {
+        this.investApi = investApi;
     }
 
     public void sendResponse(Update update, Map<Long, UserState> hashMap, TelegramBot telegramBot) {
@@ -28,12 +26,12 @@ public class OperationsResponse implements ResponseStrategy {
 
         for (Operation operation : operationList) {
 
-            String st = String.valueOf(operation.getPayment().getUnits());
-            st = st.substring(1);
+            String totalSum = String.valueOf(operation.getPayment().getUnits());
+            totalSum = totalSum.substring(1);
 
             var figi = operation.getFigi();
 
-            Instrument instrument = tinkoffInvestApiClient.getInstrumentByFigi(chatId, figi);
+            Instrument instrument = investApi.getInstrumentByFigi(chatId, figi);
 
             String info = instrument.getName()
                     + "\nСтатус заявки : "
@@ -45,7 +43,7 @@ public class OperationsResponse implements ResponseStrategy {
                     + TinkoffDataTypeParser.MoneyValueToDouble(operation.getPrice())
                     + " ₽"
                     + "\nОбщая сумма : "
-                    + st
+                    + totalSum
                     + " ₽";
             telegramBot.sendMessage(update, info);
         }
@@ -58,6 +56,6 @@ public class OperationsResponse implements ResponseStrategy {
     }
 
     private List<Operation> getOperationsList(Update update){
-        return tinkoffInvestApiClient.sandboxOperations(update.getMessage().getChatId());
+        return investApi.sandboxOperations(update.getMessage().getChatId());
     }
 }

@@ -1,19 +1,18 @@
 package io.sandbox.command_request;
 
-import io.sandbox.api_database.JpaServiceClient;
+import io.sandbox.api_database.JpaService;
 import io.sandbox.telegram_bot.TelegramBot;
 import io.sandbox.user_state.UserState;
-import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
 import java.util.Map;
 
 public class StartRequest implements RequestStrategy {
 
-    private final JpaServiceClient jpaServiceClient;
+    private final JpaService jpaService;
 
-    public StartRequest(JpaServiceClient jpaServiceClient) {
-        this.jpaServiceClient = jpaServiceClient;
+    public StartRequest(JpaService jpaService) {
+        this.jpaService = jpaService;
     }
 
     public void sendRequest(Update update, Map<Long, UserState> stateMap, TelegramBot telegramBot){
@@ -35,6 +34,6 @@ public class StartRequest implements RequestStrategy {
     }
 
     private boolean checkUserExistInDatabase(long chatId){
-        return jpaServiceClient.isExist(chatId);
+        return jpaService.isExist(chatId);
     }
 }

@@ -2,22 +2,20 @@ package io.sandbox.command_response;
 
 import io.grpc.Status;
 import io.grpc.StatusRuntimeException;
-import io.sandbox.api_tinkoff_invest.TinkoffInvestApiClient;
+import io.sandbox.api_tinkoff_invest.InvestApi;
 import io.sandbox.telegram_bot.TelegramBot;
 import io.sandbox.user_state.UserState;
 import io.sandbox.utils.TinkoffDataTypeParser;
-import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
 import java.util.Map;
 
-
 public class PostOrderResponse implements ResponseStrategy {
 
-    private final TinkoffInvestApiClient tinkoffInvestApiClient;
+    private final InvestApi investApi;
 
-    public PostOrderResponse(TinkoffInvestApiClient tinkoffInvestApiClient) {
-        this.tinkoffInvestApiClient = tinkoffInvestApiClient;
+    public PostOrderResponse(InvestApi investApi) {
+        this.investApi = investApi;
     }
 
     public void sendResponse(Update update, Map<Long, UserState> hashMap, TelegramBot telegramBot) {
@@ -38,7 +36,6 @@ public class PostOrderResponse implements ResponseStrategy {
     }
 
     private String outputResponse(Update update){
-
         var chatId = update.getMessage().getChatId();
 
         String inputMessage = update.getMessage().getText();
@@ -53,9 +50,9 @@ public class PostOrderResponse implements ResponseStrategy {
             throw new StatusRuntimeException(Status.INVALID_ARGUMENT);
         }
 
-        var order = tinkoffInvestApiClient.postOrderBuyMarket(chatId, ticker.toUpperCase(), String.valueOf(quantity));
+        var order = investApi.postOrderBuyMarket(chatId, ticker.toUpperCase(), String.valueOf(quantity));
         var executedOrderPrice = TinkoffDataTypeParser.MoneyValueToDouble(order.getExecutedOrderPrice());
-        var instrument = tinkoffInvestApiClient.getInstrumentByTicker(chatId, ticker);
+        var instrument = investApi.getInstrumentByTicker(chatId, ticker);
 
         return "Вы купили " + quantity + " акции " +
                 instrument.getName()

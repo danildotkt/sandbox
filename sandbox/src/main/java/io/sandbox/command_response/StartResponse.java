@@ -1,21 +1,20 @@
 package io.sandbox.command_response;
 
-import io.sandbox.api_tinkoff_invest.TinkoffInvestApiClient;
+import io.sandbox.api_tinkoff_invest.InvestApi;
 import io.sandbox.entity.TelegramUser;
 import io.sandbox.kafka.TelegramUserProducer;
 import io.sandbox.telegram_bot.TelegramBot;
 import io.sandbox.user_state.UserState;
-import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
 import java.util.Map;
 
 public class StartResponse implements ResponseStrategy {
 
-    private final TinkoffInvestApiClient tinkoffInvestApiClient;
+    private final InvestApi investApi;
 
-    public StartResponse(TinkoffInvestApiClient tinkoffInvestApiClient) {
-        this.tinkoffInvestApiClient = tinkoffInvestApiClient;
+    public StartResponse(InvestApi investApi) {
+        this.investApi = investApi;
     }
 
     public void sendResponse(Update update, Map<Long, UserState> stateMap, TelegramBot telegramBot){
@@ -42,7 +41,7 @@ public class StartResponse implements ResponseStrategy {
         String accountId = null;
 
         try {
-            accountId = tinkoffInvestApiClient.createNewSandbox(inputMessage);
+            accountId = investApi.createNewSandbox(inputMessage);
         }catch (Exception e ){
             System.out.println(e.getMessage());
             return "Попробуйте ввести токен снова";

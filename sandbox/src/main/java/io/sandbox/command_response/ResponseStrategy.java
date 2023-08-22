@@ -7,6 +7,5 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import java.util.Map;
 
 public interface ResponseStrategy {
-
     void sendResponse(Update update, Map<Long, UserState> hashMap, TelegramBot telegramBot);
 }

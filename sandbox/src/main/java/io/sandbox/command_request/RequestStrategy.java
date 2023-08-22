@@ -7,7 +7,5 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import java.util.Map;
 
 public interface RequestStrategy {
-
     void sendRequest(Update update, Map<Long, UserState> hashMap, TelegramBot telegramBot);
-
 }

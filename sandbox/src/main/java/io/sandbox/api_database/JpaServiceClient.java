@@ -7,7 +7,7 @@ import io.sandbox.grpc.JpaServiceOuterClass;
 import org.springframework.stereotype.Service;
 
 @Service
-public class JpaServiceClient {
+public class JpaServiceClient implements JpaService{
 
     private final ManagedChannel channel = ManagedChannelBuilder
             .forAddress("localhost", 9091)
@@ -51,5 +51,4 @@ public class JpaServiceClient {
 
         return response.getAccountId();
     }
-
 }

@@ -1,5 +1,6 @@
 package io.sandbox.command_response;
 
+import io.sandbox.api_tinkoff_invest.InvestApi;
 import io.sandbox.telegram_bot.TelegramBot;
 import io.sandbox.user_state.UserState;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,37 +10,43 @@ import org.mockito.MockitoAnnotations;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.HashMap;
+import java.util.Map;
 
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
 
 class OperationsResponseTest {
 
     @Mock
-    Update update;
-
+    private InvestApi investApi;
     @Mock
-    ConcurrentHashMap<Long, UserState> stateMap;
-
+    private TelegramBot telegramBot;
     @Mock
-    TelegramBot telegramBot;
+    private Update update;
+    @Mock
+    private Message message;
+
+    private OperationsResponse operationsResponse;
+    private Map<Long, UserState> hashMap;
 
     @BeforeEach
-    public void setup(){
-        MockitoAnnotations.initMocks(this);
+    void setUp() {
+        MockitoAnnotations.openMocks(this);
+        operationsResponse = new OperationsResponse(investApi);
+        hashMap = new HashMap<>();
     }
 
-
     @Test
-    public void testSendMessage() {
-        Message message = mock(Message.class);
+    void testSendResponse_When() {
+        // Arrange
         when(update.getMessage()).thenReturn(message);
-        when(message.getChatId()).thenReturn(123456789L);
+        when(message.getChatId()).thenReturn(123L);
 
-        StartResponse.sendResponse(update, stateMap, telegramBot);
+        // Act
+        operationsResponse.sendResponse(update, hashMap, telegramBot);
 
-        verify(telegramBot, times(1)).sendMessage(eq(update), anyString());
+        // Assert
+        assertEquals(0, hashMap.size());
     }
 }

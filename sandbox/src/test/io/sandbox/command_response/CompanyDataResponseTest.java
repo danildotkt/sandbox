@@ -1,59 +1,63 @@
 package io.sandbox.command_response;
 
-import io.sandbox.api_tinkoff_invest.TinkoffInvestApiClient;
-import io.sandbox.command_request.PostOrderRequest;
+import io.sandbox.api_tinkoff_invest.InvestApi;
 import io.sandbox.telegram_bot.TelegramBot;
 import io.sandbox.user_state.UserState;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import ru.tinkoff.piapi.contract.v1.Share;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
 public class CompanyDataResponseTest {
 
-    @Mock
-    private TinkoffInvestApiClient tinkoffInvestApiClient;
-
-    @Mock
+    private InvestApi investApi;
     private TelegramBot telegramBot;
-
     private CompanyDataResponse companyDataResponse;
-    private Map<Long, UserState> hashMap;
     private Update update;
+    private Map<Long, UserState> hashMap;
+    private Share share;
+    private Message message;
 
     @BeforeEach
-    public void setup() {
-        MockitoAnnotations.initMocks(this);
-        companyDataResponse = new CompanyDataResponse(tinkoffInvestApiClient);
+    public void setUp() {
+        investApi = mock(InvestApi.class);
+        share = mock(Share.class);
+        telegramBot = mock(TelegramBot.class);
+        companyDataResponse = new CompanyDataResponse(investApi);
+        update = mock(Update.class);
         hashMap = new HashMap<>();
-        update = new Update();
-        update.getMessage().setText("ticker");
-        update.getMessage().setChatId(123L);
+        message = mock(Message.class);
     }
 
     @Test
-    public void testSwitchStateResponse_removesFromHashMapWhenResponseIsUrl() {
-        // Arrange
-        hashMap.put(123L, new UserState());
+    public void TestSendResponse_WhenValidToken() {
 
-        // Act
-        companyDataResponse.sendResponse(update, hashMap);
+        when(message.getText()).thenReturn("SBER");
+        when(update.getMessage()).thenReturn(message);
+        when(message.getChatId()).thenReturn(123L);
+        when(investApi.getInstrumentByTicker(123L, "SBER")).thenReturn(share);
 
-        // Assert
-        assertEquals(0, hashMap.size());
+        companyDataResponse.sendResponse(update, hashMap, telegramBot);
+
+        verify(telegramBot).sendMessage(update, "https://smart-lab.ru/q/SBER/f/y/");
     }
 
-    // Add more tests for different scenarios if needed
+    @Test
+    public void TestSendResponse_WhenInvalidToken() {
+
+        when(update.getMessage()).thenReturn(message);
+        when(message.getText()).thenReturn("invalidTicker");
+        when(message.getChatId()).thenReturn(123L);
+
+        companyDataResponse.sendResponse(update, hashMap, telegramBot);
+
+        assertEquals(0, hashMap.size());
+    }
 }

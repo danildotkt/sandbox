@@ -1,9 +1,8 @@
 package io.sandbox.command_response;
 
-import io.sandbox.api_tinkoff_invest.TinkoffInvestApiClient;
+import io.sandbox.api_tinkoff_invest.InvestApi;
 import io.sandbox.telegram_bot.TelegramBot;
 import io.sandbox.user_state.UserState;
-import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
 import java.util.Map;
@@ -11,10 +10,10 @@ import java.util.Map;
 
 public class CompanyDataResponse implements ResponseStrategy {
 
-    private final TinkoffInvestApiClient tinkoffInvestApiClient;
+    private final InvestApi investApi;
 
-    public CompanyDataResponse(TinkoffInvestApiClient tinkoffInvestApiClient) {
-        this.tinkoffInvestApiClient = tinkoffInvestApiClient;
+    public CompanyDataResponse(InvestApi investApi) {
+        this.investApi = investApi;
     }
 
     public void sendResponse(Update update, Map<Long, UserState> hashMap, TelegramBot telegramBot) {
@@ -36,7 +35,7 @@ public class CompanyDataResponse implements ResponseStrategy {
         var chatId = update.getMessage().getChatId();
 
         try {
-            tinkoffInvestApiClient.getInstrumentByTicker(chatId, ticker);
+            investApi.getInstrumentByTicker(chatId, ticker);
         }
         catch(Exception e){
             return "Компании c тикером \""+ticker+"\" не существует, попробуйте снова \nНапример : gazp";

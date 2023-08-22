@@ -6,8 +6,7 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 
 public class MessageUtils {
     public static void defaultMessage(Update update, TelegramBot telegramBot){
-        var text =  "Для взаимодействия со мной вы можете " +
-                "использовать следущие команды :\n" +
+        var text =  "Для взаимодействия со мной вы можете использовать следующие команды :\n" +
                 "/portfolio - просмотр портфеля \n" +
                 "/post_order - покупка акций \n" +
                 "/operations - список операций \n" +

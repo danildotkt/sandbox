@@ -17,129 +17,120 @@ public class TinkoffInvestApiClient implements InvestApi {
         this.stub = stub;
     }
 
+
     public String createNewSandbox(String token) {
-
-        var SandboxStub = stub.returnSandboxStub(token);
-
-        OpenSandboxAccountRequest request = OpenSandboxAccountRequest.newBuilder().build();
-
-        OpenSandboxAccountResponse response = SandboxStub.openSandboxAccount(request);
-
-        GetAccountsRequest request2 = GetAccountsRequest.newBuilder().build();
-
-        GetAccountsResponse response2 = SandboxStub.getSandboxAccounts(request2);
-
-        List<Account> list = response2.getAccountsList();
-        Account account = list.get(0);
-        String accountId = account.getId();
-
-        MoneyValue value = MoneyValue
-                .newBuilder()
-                .setCurrency("RUB")
-                .setUnits(6_000_000)
-                .build();
-
-        SandboxPayInRequest request3 = SandboxPayInRequest
-                .newBuilder()
-                .setAccountId(accountId)
-                .setAmount(value)
-                .build();
-
-        SandboxPayInResponse response3 = SandboxStub.sandboxPayIn(request3);
-
+        var sandboxStub = stub.returnSandboxStub(token);
+        String accountId = openSandboxAccount(sandboxStub);
+        payInSandboxAccount(sandboxStub, accountId);
         return accountId;
     }
 
-    public PostOrderResponse postOrderBuyMarket(long chatId, String ticker, String quantity){
+    private String openSandboxAccount(SandboxServiceGrpc.SandboxServiceBlockingStub stub) {
+        OpenSandboxAccountRequest request = OpenSandboxAccountRequest.newBuilder().build();
+        OpenSandboxAccountResponse response = stub.openSandboxAccount(request);
+        return getSandboxAccountId(stub);
+    }
 
+    private String getSandboxAccountId(SandboxServiceGrpc.SandboxServiceBlockingStub stub) {
+        GetAccountsRequest request = GetAccountsRequest.newBuilder().build();
+        GetAccountsResponse response = stub.getSandboxAccounts(request);
+        List<Account> list = response.getAccountsList();
+        Account account = list.get(0);
+        return account.getId();
+    }
+
+    private void payInSandboxAccount(SandboxServiceGrpc.SandboxServiceBlockingStub stub, String accountId) {
+        MoneyValue value = MoneyValue.newBuilder().setCurrency("RUB").setUnits(6_000_000).build();
+        SandboxPayInRequest request = SandboxPayInRequest.newBuilder().setAccountId(accountId).setAmount(value).build();
+        SandboxPayInResponse response = stub.sandboxPayIn(request);
+    }
+
+    public PostOrderResponse postOrderBuyMarket(long chatId, String ticker, String quantity) {
         var sandboxToken = jpaService.getSandboxToken(chatId);
         var accountId = jpaService.getAccountId(chatId);
-
         var sandboxStub = stub.returnSandboxStub(sandboxToken);
-
         Share share = getInstrumentByTicker(chatId, ticker);
         String figi = share.getFigi();
+        PostOrderRequest request = buildPostOrderRequest(accountId, quantity, figi);
+        return sandboxStub.postSandboxOrder(request);
+    }
 
-        PostOrderRequest request4 = PostOrderRequest.newBuilder()
+    private PostOrderRequest buildPostOrderRequest(String accountId, String quantity, String figi) {
+        return PostOrderRequest.newBuilder()
                 .setAccountId(accountId)
                 .setDirection(OrderDirection.ORDER_DIRECTION_BUY)
                 .setOrderType(OrderType.ORDER_TYPE_MARKET)
                 .setQuantity(Long.parseLong(quantity))
                 .setInstrumentId(figi)
                 .build();
-
-        return sandboxStub.postSandboxOrder(request4);
     }
 
-    public List<PortfolioPosition> sandboxPortfolio(long chatId){
-
+    public List<PortfolioPosition> sandboxPortfolio(long chatId) {
         var sandboxToken = jpaService.getSandboxToken(chatId);
         var accountId = jpaService.getAccountId(chatId);
-
         var sandboxStub = stub.returnSandboxStub(sandboxToken);
-
-        PortfolioRequest request = PortfolioRequest.newBuilder()
-                .setAccountId(accountId)
-                .build();
-
+        PortfolioRequest request = buildPortfolioRequest(accountId);
         PortfolioResponse response = sandboxStub.getSandboxPortfolio(request);
-
         return response.getPositionsList();
     }
 
-    public List<Operation> sandboxOperations(long chatId){
+    private PortfolioRequest buildPortfolioRequest(String accountId) {
+        return PortfolioRequest.newBuilder()
+                .setAccountId(accountId)
+                .build();
+    }
 
+    public List<Operation> sandboxOperations(long chatId) {
         var sandboxToken = jpaService.getSandboxToken(chatId);
         var accountId = jpaService.getAccountId(chatId);
-    
-        var OperationStub = stub.returnOperationStub(sandboxToken);
-    
-        OperationsRequest request = OperationsRequest.newBuilder().setAccountId(accountId).build();
-    
-        OperationsResponse response = OperationStub.getOperations(request);
-    
-        var list = response.getOperationsList();
-        return getLastTenOperations(list);
+        var operationStub = stub.returnOperationStub(sandboxToken);
+        OperationsRequest request = buildOperationsRequest(accountId);
+        OperationsResponse response = operationStub.getOperations(request);
+        var operationList = response.getOperationsList();
+        return getLastTenOperations(operationList);
     }
-    
-    private List<Operation> getLastTenOperations(List<Operation> operationList){
-        if(operationList.size() <= 10){
+
+    private OperationsRequest buildOperationsRequest(String accountId) {
+        return OperationsRequest.newBuilder()
+                .setAccountId(accountId)
+                .build();
+    }
+
+    private List<Operation> getLastTenOperations(List<Operation> operationList) {
+        if (operationList.size() <= 10) {
             return operationList;
         }
-        return operationList.subList(operationList.size()-10 , operationList.size());
+        return operationList.subList(operationList.size() - 10, operationList.size());
     }
 
-    public Share getInstrumentByTicker(long chatId,String ticker){
-
+    public Share getInstrumentByTicker(long chatId, String ticker) {
         var sandboxToken = jpaService.getSandboxToken(chatId);
+        var instrumentStub = stub.returnInstrumentStub(sandboxToken);
+        InstrumentRequest request = buildInstrumentRequestByTicker(ticker);
+        ShareResponse response = instrumentStub.shareBy(request);
+        return response.getInstrument();
+    }
 
-        var InstrumentStub = stub.returnInstrumentStub(sandboxToken);
-
-        InstrumentRequest request3 = InstrumentRequest
-                .newBuilder()
+    private InstrumentRequest buildInstrumentRequestByTicker(String ticker) {
+        return InstrumentRequest.newBuilder()
                 .setIdType(InstrumentIdType.INSTRUMENT_ID_TYPE_TICKER)
                 .setId(ticker.toUpperCase())
                 .setClassCode("TQBR")
                 .build();
-
-        ShareResponse response3 = InstrumentStub.shareBy(request3);
-
-        return response3.getInstrument();
     }
 
     public Instrument getInstrumentByFigi(long chatId, String figi) {
-
         var sandboxToken = jpaService.getSandboxToken(chatId);
+        var instrumentStub = stub.returnInstrumentStub(sandboxToken);
+        InstrumentRequest request = buildInstrumentRequestByFigi(figi);
+        InstrumentResponse response = instrumentStub.getInstrumentBy(request);
+        return response.getInstrument();
+    }
 
-        var InstrumentStub = stub.returnInstrumentStub(sandboxToken);
-
-        InstrumentRequest request3 = InstrumentRequest
-                .newBuilder()
+    private InstrumentRequest buildInstrumentRequestByFigi(String figi) {
+        return InstrumentRequest.newBuilder()
                 .setIdType(InstrumentIdType.INSTRUMENT_ID_TYPE_FIGI)
                 .setId(figi)
                 .build();
-
-        InstrumentResponse response3 = InstrumentStub.getInstrumentBy(request3);
-        return response3.getInstrument();
     }
 }

@@ -1,34 +1,60 @@
 package io.sandbox.telegram_bot;
 
-//class TelegramBotTest {
-//
-//    @Mock
-//    private TelegramUpdateHandler telegramUpdateHandler;
-//
-//    @Mock
-//    private TelegramBot telegramBot;
-//
-//    @BeforeEach
-//    void setUp() {
-//        MockitoAnnotations.initMocks(this);
-//        telegramBot = new TelegramBot(telegramUpdateHandler);
-//    }
-//
-//    @Test
-//    void sendMessage_shouldExecuteSendMessage() throws TelegramApiException {
-//        Update update = new Update();
-//        Message message = new Message();
-//        Chat chat = Mockito.mock(Chat.class);
-//        Mockito.when(chat.getId()).thenReturn(123456789L);
-//        message.setChat(chat);
-//        update.setMessage(message);
-//        String text = "Hello, world!";
-//        SendMessage sendMessage = new SendMessage();
-//        sendMessage.setChatId(message.getChat().getId());
-//        sendMessage.setText(text);
-//
-//        telegramBot.sendMessage(update, text);
-//
-//        verify(telegramBot, times(1)).execute(sendMessage);
-//    }
-//}
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.*;
+import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.objects.Message;
+import org.telegram.telegrambots.meta.api.objects.Update;
+import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
+
+class TelegramBotTest {
+
+    @Mock
+    private Update update;
+
+    @Mock
+    private TelegramUpdateHandler telegramUpdateHandler;
+
+    @InjectMocks
+    private TelegramBot telegramBot;
+
+
+    @BeforeEach
+    void setup() {
+        MockitoAnnotations.initMocks(this);
+    }
+
+    @Test
+    void testOnUpdateReceived() {
+        Update update = new Update();
+        Message message = new Message();
+        message.setText("Hello");
+        update.setMessage(message);
+
+        telegramBot.onUpdateReceived(update);
+
+        verify(telegramUpdateHandler).updateHandle(update);
+    }
+
+    @Test
+    void sendMessage_shouldExecuteSendMessage() throws TelegramApiException {
+        String text = "Hello, world!";
+        TelegramBot telegramBot = mock(TelegramBot.class);
+        Update update = mock(Update.class);
+        Message message = mock(Message.class);
+        when(update.getMessage()).thenReturn(message);
+        when(message.getChatId()).thenReturn(123L);
+
+        SendMessage expectedMessage = new SendMessage();
+        expectedMessage.setChatId(123L);
+        expectedMessage.setText(text);
+
+        telegramBot.execute(expectedMessage);
+
+        verify(telegramBot, times(1)).execute(expectedMessage);
+    }
+}

@@ -16,7 +16,7 @@ public class BuyStockRequest implements CommandRequest {
     private String switchStateRequest(Update update, Map<Long, UserState> hashMap){
         var chatId = update.getMessage().getChatId();
         hashMap.remove(chatId);
-        hashMap.put(chatId, UserState.STATE_POST_ORDER_RESPONSE);
+        hashMap.put(chatId, UserState.STATE_BUY_STOCK_RESPONSE);
         return PostOrderMessage.tickerPromptMessage();
     }
 

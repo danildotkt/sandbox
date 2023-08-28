@@ -5,48 +5,44 @@ import io.sandbox.telegram_bot.TelegramBot;
 import io.sandbox.user_state.UserState;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
-import ru.tinkoff.piapi.contract.v1.Share;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
 
-public class CompanyDataResponseTest {
-
+class BuyStockResponseTest {
+    @Mock
     private InvestApi investApi;
+    @Mock
     private TelegramBot telegramBot;
-    private CompanyDataResponse companyDataResponse;
+    @Mock
     private Update update;
-    private Map<Long, UserState> hashMap;
-    private Share share;
+    @Mock
     private Message message;
+
+    private BuyStockResponse buyStockResponse;
+    private Map<Long, UserState> hashMap;
 
     @BeforeEach
     void setUp() {
-        investApi = mock(InvestApi.class);
-        share = mock(Share.class);
-        telegramBot = mock(TelegramBot.class);
-        companyDataResponse = new CompanyDataResponse(investApi);
-        update = mock(Update.class);
+        MockitoAnnotations.openMocks(this);
+        buyStockResponse = new BuyStockResponse(investApi);
         hashMap = new HashMap<>();
-        message = mock(Message.class);
     }
 
     @Test
     void testSendResponse() {
-
-        when(message.getText()).thenReturn("SBER");
         when(update.getMessage()).thenReturn(message);
         when(message.getChatId()).thenReturn(123L);
-        when(investApi.getInstrumentByTicker(123L, "SBER")).thenReturn(share);
+        buyStockResponse.sendResponse(update, hashMap, telegramBot);
 
-        companyDataResponse.sendResponse(update, hashMap, telegramBot);
-
-        verify(telegramBot).sendMessage(update, "https://smart-lab.ru/q/SBER/f/y/");
+        assertEquals(1, hashMap.size());
+        assertEquals(UserState.STATE_BUY_STOCK_RESPONSE, hashMap.get(123L));
     }
-
 }

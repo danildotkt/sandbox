@@ -14,7 +14,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.mockito.Mockito.*;
-import static org.mockito.Mockito.times;
 
 class CompanyDataRequestTest {
 

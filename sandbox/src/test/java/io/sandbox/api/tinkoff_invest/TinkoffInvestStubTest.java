@@ -1,6 +1,5 @@
 package io.sandbox.api.tinkoff_invest;
 
-import io.sandbox.api.tinkoff_invest.TinkoffInvestStub;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.tinkoff.piapi.contract.v1.InstrumentsServiceGrpc;

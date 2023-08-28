@@ -15,7 +15,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CommandFactoryTest {
@@ -39,7 +38,7 @@ public class CommandFactoryTest {
         CommandRequest startRequest = commandFactory.createRequest(UserState.STATE_START_REQUEST);
         assertTrue(startRequest instanceof StartRequest);
 
-        CommandRequest buyStockRequest = commandFactory.createRequest(UserState.STATE_POST_ORDER_REQUEST);
+        CommandRequest buyStockRequest = commandFactory.createRequest(UserState.STATE_BUY_STOCK_REQUEST);
         assertTrue(buyStockRequest instanceof BuyStockRequest);
 
         CommandRequest companyDataRequest = commandFactory.createRequest(UserState.STATE_COMPANY_DATA_REQUEST);
@@ -54,7 +53,7 @@ public class CommandFactoryTest {
         assertTrue(startResponse instanceof StartResponse);
 
         // Проверяем создание команды BuyStockResponse
-        CommandResponse buyStockResponse = commandFactory.createResponse(UserState.STATE_POST_ORDER_RESPONSE);
+        CommandResponse buyStockResponse = commandFactory.createResponse(UserState.STATE_BUY_STOCK_RESPONSE);
         assertTrue(buyStockResponse instanceof BuyStockResponse);
 
         // Проверяем создание команды CompanyDataResponse

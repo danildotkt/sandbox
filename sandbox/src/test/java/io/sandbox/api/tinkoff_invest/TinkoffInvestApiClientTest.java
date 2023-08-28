@@ -1,19 +1,11 @@
 package io.sandbox.api.tinkoff_invest;
 
-import io.sandbox.api.database.JpaService;
-import io.sandbox.api.database.JpaServiceClient;
-import io.sandbox.api.tinkoff_invest.TinkoffInvestApiClient;
-import io.sandbox.api.tinkoff_invest.TinkoffInvestStub;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import ru.tinkoff.piapi.contract.v1.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;

@@ -1,8 +1,5 @@
 package io.sandbox.api.database;
 
-import io.grpc.ManagedChannel;
-import io.grpc.ManagedChannelBuilder;
-import io.sandbox.grpc.JpaServiceGrpc;
 import io.sandbox.grpc.JpaServiceOuterClass;
 import org.springframework.stereotype.Service;
 

@@ -27,7 +27,7 @@ public class CommandFactory {
     public  CommandRequest createRequest(UserState userState) {
         return switch (userState) {
             case STATE_START_REQUEST -> new StartRequest(jpaService);
-            case STATE_POST_ORDER_REQUEST -> new BuyStockRequest();
+            case STATE_BUY_STOCK_REQUEST -> new BuyStockRequest();
             case STATE_COMPANY_DATA_REQUEST -> new CompanyDataRequest();
             default -> throw new IllegalArgumentException("Invalid user state for request");
         };
@@ -36,7 +36,7 @@ public class CommandFactory {
     public CommandResponse createResponse(UserState userState) {
         return switch (userState) {
             case STATE_START_RESPONSE -> new StartResponse(telegramUserProducer, investApi);
-            case STATE_POST_ORDER_RESPONSE -> new BuyStockResponse(investApi);
+            case STATE_BUY_STOCK_RESPONSE -> new BuyStockResponse(investApi);
             case STATE_COMPANY_DATA_RESPONSE -> new CompanyDataResponse(investApi);
             case STATE_PORTFOLIO_RESPONSE -> new PortfolioResponse(investApi);
             case STATE_OPERATIONS_RESPONSE -> new OperationsResponse(investApi);

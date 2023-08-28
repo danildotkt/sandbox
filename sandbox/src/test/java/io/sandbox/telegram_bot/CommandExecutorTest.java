@@ -22,81 +22,57 @@ import static org.mockito.Mockito.*;
 
 public class CommandExecutorTest {
 
+    private CommandExecutor commandExecutor;
+
     @Mock
-    private TelegramUserProducer telegramUserProducer;
-    @Mock
-    private InvestApi investApi;
-    @Mock
-    private JpaService jpaService;
-    @Mock
-    private Update update;
-    @Mock
-    private Message message;
+    private CommandFactory commandFactory;
+
     @Mock
     private TelegramBot telegramBot;
-    @Mock
-    CommandResponse commandResponse;
-    @Mock
-    CommandRequest commandRequest;
-    @Mock
-    CommandFactory commandFactory;
-
-    private CommandExecutor commandExecutor;
-    private Map<Long, UserState> stateMap;
 
     @BeforeEach
-    public void setup() {
+    public void setUp() {
         MockitoAnnotations.initMocks(this);
         commandExecutor = new CommandExecutor(commandFactory);
-        stateMap = new HashMap<>();
     }
 
     @Test
-    public void testExecuteCommand_WhenStateIsRequest() {
-        // Arrange
-        stateMap.put(123L, UserState.STATE_START_REQUEST);
-        when(update.getMessage()).thenReturn(message);
-        when(message.getChatId()).thenReturn(123L);
-        when(UserState.STATE_START_REQUEST.isRequest()).thenReturn(true);
+    void testExecuteCommand_requestState() {
+        long chatId = 12345L;
+        UserState userState = UserState.STATE_START_REQUEST;
+        Map<Long, UserState> stateMap = new HashMap<>();
+        stateMap.put(chatId, userState);
 
-        // Act
+        Update update = mock(Update.class);
+        Message message = mock(Message.class);
+        when(update.getMessage()).thenReturn(message);
+        when(message.getChatId()).thenReturn(chatId);
+
+        CommandRequest request = mock(CommandRequest.class);
+        when(commandFactory.createRequest(userState)).thenReturn(request);
+
         commandExecutor.executeCommand(stateMap, update, telegramBot);
 
-        // Assert
-        // Verify that the corresponding CommandRequest is created and executed
-        verify(commandRequest).sendRequest(update, stateMap, telegramBot);
+        verify(request).sendRequest(update, stateMap, telegramBot);
     }
 
     @Test
-    public void testExecuteCommand_WhenStateIsResponse() {
-        // Arrange
-        stateMap.put(123L, UserState.STATE_START_RESPONSE);
-        when(update.getMessage()).thenReturn(message);
-        when(message.getChatId()).thenReturn(123L);
-        when(UserState.STATE_START_RESPONSE.isResponse()).thenReturn(true);
+    void testExecuteCommand_responseState() {
+        long chatId = 12345L;
+        UserState userState = UserState.STATE_PORTFOLIO_RESPONSE;
+        Map<Long, UserState> stateMap = new HashMap<>();
+        stateMap.put(chatId, userState);
 
-        // Act
+        Update update = mock(Update.class);
+        Message message = mock(Message.class);
+        when(update.getMessage()).thenReturn(message);
+        when(message.getChatId()).thenReturn(chatId);
+
+        CommandResponse response = mock(CommandResponse.class);
+        when(commandFactory.createResponse(userState)).thenReturn(response);
+
         commandExecutor.executeCommand(stateMap, update, telegramBot);
 
-        // Assert
-        // Verify that the corresponding CommandResponse is created and executed
-        verify(commandResponse).sendResponse(update, stateMap, telegramBot);
-    }
-
-    @Test
-    public void testExecuteCommand_WhenStateIsDefault() {
-        // Arrange
-        stateMap.put(123L, UserState.STATE_DEFAULT);
-        when(update.getMessage()).thenReturn(message);
-        when(message.getText()).thenReturn("start");
-        when(message.getChatId()).thenReturn(123L);
-
-        // Act
-        commandExecutor.executeCommand(stateMap, update, telegramBot);
-
-        // Assert
-        // Verify that the state is updated and executeCommand is called recursively
-        assertEquals(UserState.STATE_START_REQUEST, stateMap.get(123L));
-        verify(commandExecutor, times(2)).executeCommand(stateMap, update, telegramBot);
+        verify(response).sendResponse(update, stateMap, telegramBot);
     }
 }

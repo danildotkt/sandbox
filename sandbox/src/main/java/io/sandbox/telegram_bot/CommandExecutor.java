@@ -1,9 +1,6 @@
 package io.sandbox.telegram_bot;
 
-import io.sandbox.api.database.JpaService;
-import io.sandbox.api.tinkoff_invest.InvestApi;
 import io.sandbox.factory.CommandFactory;
-import io.sandbox.kafka.TelegramUserProducer;
 import io.sandbox.request.CommandRequest;
 import io.sandbox.response.CommandResponse;
 import io.sandbox.user_state.UserState;
@@ -66,7 +63,7 @@ public class CommandExecutor {
             }
 
             case "/post_order" -> {
-                stateMap.put(chatId, UserState.STATE_POST_ORDER_REQUEST);
+                stateMap.put(chatId, UserState.STATE_BUY_STOCK_REQUEST);
                 executeCommand(stateMap, update ,telegramBot);
             }
 

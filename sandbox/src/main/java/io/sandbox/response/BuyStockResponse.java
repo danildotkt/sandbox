@@ -34,7 +34,7 @@ public class BuyStockResponse implements CommandResponse {
             hashMap.remove(chatId);
             return response;
         } catch (Exception ex){
-            hashMap.put(chatId, UserState.STATE_POST_ORDER_RESPONSE);
+            hashMap.put(chatId, UserState.STATE_BUY_STOCK_RESPONSE);
             return PostOrderMessage.incorrectInputMessage();
         }
     }

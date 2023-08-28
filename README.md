@@ -30,6 +30,8 @@ Telegram-бот "sandbox" использует Tinkoff Invest API, чтобы п
   - Docker
 
 Нужно в папке resources в модуле sandbox ввести telegram bot token и название телеграм бот 
+<br> 
+
 Дальше просто запускаете docker-compose.yml файл и стартуете модули.
 
 ## database модуль 

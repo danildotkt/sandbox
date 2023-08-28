@@ -56,11 +56,12 @@ Telegram-бот "sandbox" использует Tinkoff Invest API, чтобы п
 
 1. **JpaService** - интерфейс, предоставляющий некоторые команды для взаимодействия с gRPC сервисом.
 2. **JpaServiceClient** - клиент gRPC сервера, который получает данные.
+3. **JpaServiceStub** - возвращает stub для взаимодействия с JpaServiceClient.
 <br>
 
-3. **InvestAPI** - интерфейс, в котором описаны команды, необходимые для взаимодействия с пользователем.
-4. **TinkoffInvestApiClient** - класс, реализующий методы, связанные с взаимодействием с Tinkoff Invest API.
-5. **TinkoffInvestStub** - создает канал с метаданными для подключения к sandbox invest api tinkoff и предоставляет stubы.
+4. **InvestAPI** - интерфейс, в котором описаны команды, необходимые для взаимодействия с пользователем.
+5. **TinkoffInvestApiClient** - класс, реализующий методы, связанные с взаимодействием с Tinkoff Invest API.
+6. **TinkoffInvestStub** - создает канал с метаданными для подключения к sandbox invest api tinkoff и предоставляет stubы.
 <br>
 
 8. **TelegramUser** - DTO для отправки в базу данных.

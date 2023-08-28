@@ -18,12 +18,12 @@ public class TelegramUserConsumerTest {
     private TelegramUserConsumer telegramUserConsumer;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         MockitoAnnotations.initMocks(this);
     }
 
     @Test
-    public void testSetToDatabase() {
+     void testSetToDatabase() {
         TelegramUser telegramUser = TelegramUser.builder().sandboxToken("token").chatId(124L).accountId("id").build();
         this.telegramUserConsumer.saveToDatabase(telegramUser);
         Mockito.verify(this.telegramUserRepository, Mockito.times(1)).save(telegramUser);

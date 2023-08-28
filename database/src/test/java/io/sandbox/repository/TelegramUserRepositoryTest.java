@@ -22,7 +22,7 @@ public class TelegramUserRepositoryTest {
     private TelegramUserRepository telegramUserRepository;
 
     @Test
-    public void testFindById() {
+    void testFindById() {
 
         TelegramUser telegramUser = TelegramUser.builder()
                 .chatId(124L)

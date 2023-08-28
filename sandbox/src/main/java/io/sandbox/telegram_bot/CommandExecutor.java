@@ -1,15 +1,11 @@
 package io.sandbox.telegram_bot;
 
-import io.sandbox.api_database.JpaService;
-import io.sandbox.api_tinkoff_invest.InvestApi;
-import io.sandbox.command.Command;
-import io.sandbox.command.RequestCommand;
-import io.sandbox.command.ResponseCommand;
-import io.sandbox.request_strategy.CompanyDataRequest;
-import io.sandbox.request_strategy.PostOrderRequest;
-import io.sandbox.request_strategy.StartRequest;
-import io.sandbox.response_strategy.*;
+import io.sandbox.api.database.JpaService;
+import io.sandbox.api.tinkoff_invest.InvestApi;
+import io.sandbox.factory.CommandFactory;
 import io.sandbox.kafka.TelegramUserProducer;
+import io.sandbox.request.CommandRequest;
+import io.sandbox.response.CommandResponse;
 import io.sandbox.user_state.UserState;
 import io.sandbox.utils.message.CommonMessage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,68 +18,67 @@ import java.util.Map;
 @Component
 public class CommandExecutor {
 
-    private final TelegramUserProducer telegramUserProducer;
-    private final InvestApi investApi;
-    private final JpaService jpaService;
+    private final CommandFactory commandFactory;
 
     @Autowired
-    public CommandExecutor(TelegramUserProducer telegramUserProducer, InvestApi investApi, JpaService jpaService) {
-        this.telegramUserProducer = telegramUserProducer;
-        this.investApi = investApi;
-        this.jpaService = jpaService;
+    public CommandExecutor(CommandFactory commandFactory) {
+        this.commandFactory = commandFactory;
     }
 
-    public void executeCommand(Map<Long, UserState> userMap, Update update, TelegramBot telegramBot) {
-
+    public void executeCommand(Map<Long, UserState> stateMap, Update update, TelegramBot telegramBot) {
         var chatId = update.getMessage().getChatId();
-        var userState = userMap.get(chatId);
+        var userState = stateMap.get(chatId);
 
-        Command command = null;
-
-        switch (userState) {
-
-            case STATE_START_REQUEST -> command = new RequestCommand(new StartRequest(jpaService));
-            case STATE_START_RESPONSE -> command = new ResponseCommand(new StartResponse(telegramUserProducer, investApi));
-
-            case STATE_POST_ORDER_REQUEST -> command = new RequestCommand(new PostOrderRequest());
-            case STATE_POST_ORDER_RESPONSE -> command = new ResponseCommand(new PostOrderResponse(investApi));
-
-            case STATE_COMPANY_DATA_REQUEST -> command = new RequestCommand(new CompanyDataRequest());
-            case STATE_COMPANY_DATA_RESPONSE -> command = new ResponseCommand(new CompanyDataResponse(investApi));
-
-            case STATE_PORTFOLIO -> command = new ResponseCommand(new PortfolioResponse(investApi));
-
-            case STATE_OPERATIONS -> command = new ResponseCommand(new OperationsResponse(investApi));
-
-            default -> waitForTextHandler(userMap, update, telegramBot);
-        }
-
-        if (command != null) {
-            command.execute(update, userMap, telegramBot);
+        if (userState.isRequest()) {
+            handleRequest(stateMap, update, telegramBot, userState);
+        } else if (userState.isResponse()) {
+            handleResponse(stateMap, update, telegramBot, userState);
+        } else {
+            defaultStateHandler(stateMap, update, telegramBot);
         }
     }
 
-    private void waitForTextHandler(Map<Long, UserState> hashMap, Update update, TelegramBot telegramBot) {
+    private void handleRequest(Map<Long, UserState> stateMap, Update update, TelegramBot telegramBot, UserState userState) {
+        CommandRequest request = commandFactory.createRequest(userState);
+        request.sendRequest(update, stateMap, telegramBot);
+    }
+
+    private void handleResponse(Map<Long, UserState> stateMap, Update update, TelegramBot telegramBot, UserState userState) {
+        CommandResponse response = commandFactory.createResponse(userState);
+        response.sendResponse(update, stateMap, telegramBot);
+    }
+
+    private void defaultStateHandler(Map<Long, UserState> stateMap, Update update, TelegramBot telegramBot) {
 
         var inputMessage = update.getMessage().getText();
         var chatId = update.getMessage().getChatId();
 
-        hashMap.remove(chatId);
+        stateMap.remove(chatId);
 
         switch (inputMessage) {
+            case "/start" -> {
+                stateMap.put(chatId, UserState.STATE_START_REQUEST);
+                executeCommand(stateMap, update ,telegramBot);
+            }
+            case "/portfolio" ->{
+                stateMap.put(chatId, UserState.STATE_PORTFOLIO_RESPONSE);
+                executeCommand(stateMap, update ,telegramBot);
+            }
 
-            case "/start" -> hashMap.put(chatId, UserState.STATE_START_REQUEST);
+            case "/post_order" -> {
+                stateMap.put(chatId, UserState.STATE_POST_ORDER_REQUEST);
+                executeCommand(stateMap, update ,telegramBot);
+            }
 
-            case "/portfolio" -> hashMap.put(chatId, UserState.STATE_PORTFOLIO);
-
-            case "/post_order" -> hashMap.put(chatId, UserState.STATE_POST_ORDER_REQUEST);
-
-            case "/operations" -> hashMap.put(chatId, UserState.STATE_OPERATIONS);
-
-            case "/company_data" -> hashMap.put(chatId, UserState.STATE_COMPANY_DATA_REQUEST);
-
+            case "/operations" -> {
+                stateMap.put(chatId, UserState.STATE_OPERATIONS_RESPONSE);
+                executeCommand(stateMap, update, telegramBot);
+            }
+            case "/company_data" -> {
+                stateMap.put(chatId, UserState.STATE_COMPANY_DATA_REQUEST);
+                executeCommand(stateMap, update, telegramBot);
+            }
             default -> CommonMessage.sendDefaultMessage(update, telegramBot);
         }
-        executeCommand(hashMap, update, telegramBot);
     }
 }

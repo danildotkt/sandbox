@@ -1,6 +1,7 @@
 package io.sandbox.telegram_bot;
 
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
@@ -10,6 +11,7 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import javax.annotation.PostConstruct;
 
+@Slf4j
 @Service
 public class TelegramBot extends TelegramLongPollingBot {
 
@@ -42,6 +44,7 @@ public class TelegramBot extends TelegramLongPollingBot {
 
     @Override
     public void onUpdateReceived(Update update) {
+        log.info(update.getMessage().getText());
         telegramUpdateHandler.updateHandle(update);
     }
 

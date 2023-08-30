@@ -26,13 +26,12 @@ Telegram-бот "sandbox" использует Tinkoff Invest API, чтобы п
 ## Настройки
 
 Для запуска проекта необходимо :
+
   - JDK 17+
   - Docker
-
-Нужно в папке resources в модуле sandbox ввести telegram bot token и название телеграм бот 
-<br> 
-
-Дальше просто запускаете docker-compose.yml файл и стартуете модули.
+  - в папке resources в модуле sandbox ввести telegram bot token и название телеграм бот 
+  - собрать проект с помощью команды "mvn package" для генерации Java классов из .proto файлов 
+  - запустить docker-compose.yml файл и стартуете модули.
 
 ## database модуль 
 

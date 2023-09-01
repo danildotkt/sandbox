@@ -44,12 +44,12 @@ Telegram-бот "sandbox" использует Tinkoff Invest API, чтобы п
 5. **JpaApplication** - приложение Spring Boot, в котором также запускается сервер JpaServiceImpl.
 
 
-## kafka module 
+## kafka модуль 
 
 модуль в котором создается kafka топик;)
 
 
-## sandbox module
+## sandbox модуль
 
 Этот модуль является центральным модулем, в котором происходит взаимодействие с пользователем.
 

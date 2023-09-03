@@ -26,13 +26,12 @@ Telegram-бот "sandbox" использует Tinkoff Invest API, чтобы п
 ## Настройки
 
 Для запуска проекта необходимо :
+
   - JDK 17+
   - Docker
-
-Нужно в папке resources в модуле sandbox ввести telegram bot token и название телеграм бот 
-<br> 
-
-Дальше просто запускаете docker-compose.yml файл и стартуете модули.
+  - в папке resources в модуле sandbox ввести telegram bot token и название телеграм бот 
+  - собрать проект с помощью команды "mvn package" для генерации Java классов из .proto файлов 
+  - запустить docker-compose.yml файл и стартуете модули.
 
 ## database модуль 
 
@@ -45,12 +44,12 @@ Telegram-бот "sandbox" использует Tinkoff Invest API, чтобы п
 5. **JpaApplication** - приложение Spring Boot, в котором также запускается сервер JpaServiceImpl.
 
 
-## kafka module 
+## kafka модуль 
 
 модуль в котором создается kafka топик;)
 
 
-## sandbox module
+## sandbox модуль
 
 Этот модуль является центральным модулем, в котором происходит взаимодействие с пользователем.
 

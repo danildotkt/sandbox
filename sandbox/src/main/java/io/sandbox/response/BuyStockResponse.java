@@ -5,7 +5,7 @@ import io.grpc.StatusRuntimeException;
 import io.sandbox.api.tinkoff_invest.InvestApi;
 import io.sandbox.telegram_bot.TelegramBot;
 import io.sandbox.user_state.UserState;
-import io.sandbox.utils.message.PostOrderMessage;
+import io.sandbox.utils.message.BuyStockMessage;
 import io.sandbox.utils.parser.DecimalParser;
 import io.sandbox.utils.parser.TelegramDataTypeParser;
 import io.sandbox.utils.parser.TinkoffDataTypeParser;
@@ -35,7 +35,7 @@ public class BuyStockResponse implements CommandResponse {
             return response;
         } catch (Exception ex){
             hashMap.put(chatId, UserState.STATE_BUY_STOCK_RESPONSE);
-            return PostOrderMessage.incorrectInputMessage();
+            return BuyStockMessage.incorrectInputMessage();
         }
     }
 
@@ -54,7 +54,7 @@ public class BuyStockResponse implements CommandResponse {
         var instrument = investApi.getInstrumentByTicker(chatId, ticker);
         var executedPricePerStock = DecimalParser.roundForDoubleValue(executedOrderPrice / quantity);
 
-        return PostOrderMessage.formatOrder(quantity,instrument.getName(), executedPricePerStock);
+        return BuyStockMessage.formatOrder(quantity,instrument.getName(), executedPricePerStock);
     }
 
     private void checkQuantityMoreThanZero(int quantity) {

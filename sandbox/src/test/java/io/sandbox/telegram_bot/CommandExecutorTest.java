@@ -1,9 +1,6 @@
 package io.sandbox.telegram_bot;
 
-import io.sandbox.api.database.JpaService;
-import io.sandbox.api.tinkoff_invest.InvestApi;
 import io.sandbox.factory.CommandFactory;
-import io.sandbox.kafka.TelegramUserProducer;
 import io.sandbox.request.CommandRequest;
 import io.sandbox.response.CommandResponse;
 import io.sandbox.user_state.UserState;
@@ -17,7 +14,6 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 public class CommandExecutorTest {

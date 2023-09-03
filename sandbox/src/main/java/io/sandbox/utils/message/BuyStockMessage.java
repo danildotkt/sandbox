@@ -1,6 +1,6 @@
 package io.sandbox.utils.message;
 
-public class PostOrderMessage {
+public class BuyStockMessage {
 
     public static String tickerPromptMessage() {
         return "Введите тикер компании \nНапример: Aqua 49";

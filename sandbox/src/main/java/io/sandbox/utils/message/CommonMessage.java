@@ -9,7 +9,7 @@ public class CommonMessage {
         var text = """
                 Для взаимодействия со мной вы можете использовать следующие команды :
                 /portfolio - просмотр портфеля\s
-                /post_order - покупка акций\s
+                /buy_stock - покупка акций\s
                 /operations - список операций\s
                 /company_data - финансовые отчеты компании""";
 

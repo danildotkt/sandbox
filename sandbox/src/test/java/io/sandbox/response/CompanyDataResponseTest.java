@@ -12,7 +12,6 @@ import ru.tinkoff.piapi.contract.v1.Share;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 public class CompanyDataResponseTest {

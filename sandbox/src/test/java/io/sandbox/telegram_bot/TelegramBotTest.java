@@ -2,13 +2,14 @@ package io.sandbox.telegram_bot;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.*;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 class TelegramBotTest {
@@ -41,7 +42,7 @@ class TelegramBotTest {
     }
 
     @Test
-    void sendMessage_shouldExecuteSendMessage() throws TelegramApiException {
+    void sendMessage() throws TelegramApiException {
         String text = "Hello, world!";
         TelegramBot telegramBot = mock(TelegramBot.class);
         Update update = mock(Update.class);

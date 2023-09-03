@@ -62,7 +62,7 @@ public class CommandExecutor {
                 executeCommand(stateMap, update ,telegramBot);
             }
 
-            case "/post_order" -> {
+            case "/buy_stock" -> {
                 stateMap.put(chatId, UserState.STATE_BUY_STOCK_REQUEST);
                 executeCommand(stateMap, update ,telegramBot);
             }

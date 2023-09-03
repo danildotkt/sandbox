@@ -2,7 +2,7 @@ package io.sandbox.request;
 
 import io.sandbox.telegram_bot.TelegramBot;
 import io.sandbox.user_state.UserState;
-import io.sandbox.utils.message.PostOrderMessage;
+import io.sandbox.utils.message.BuyStockMessage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -41,6 +41,6 @@ class CompanyDataRequestTest {
     void testSendRequest() {
         when(update.getMessage().getChatId()).thenReturn(123L);
         buyStockRequest.sendRequest(update, hashMap, telegramBot);
-        verify(telegramBot, times(1)).sendMessage(update, PostOrderMessage.tickerPromptMessage());
+        verify(telegramBot, times(1)).sendMessage(update, BuyStockMessage.tickerPromptMessage());
     }
 }
